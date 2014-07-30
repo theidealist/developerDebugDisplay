@@ -1,0 +1,45 @@
+###############################################################################
+## @file      SConscript
+## @author    Chris L Baker (clb) <chris@chimail.net>
+## @date      2014.05.20
+## @brief     SConscript for Developer Debug Display lib
+##
+## @attention Copyright (C) 2014
+## @attention All rights reserved
+###############################################################################
+
+# get our construction environment
+Import('env')
+
+env.InstallLib(
+    env.SharedLibrary(
+        target = 'DDDisplayInterface',
+        source = [
+            'DisplayInterface.cpp',
+            'KeypressEventHandler.cpp',
+            'MainWindow.cpp',
+            'QOSGWidget.cpp',
+            'ScreenshotCallback.cpp',
+            ],
+        LIBS = [
+            'DDDisplayObjects',
+            'OpenThreads',
+            'QtOpenGL',
+            'osg',
+            'osgDB',
+            'osgGA',
+            'osgText',
+            'osgUtil',
+            'osgViewer',
+            ],
+        )
+    )
+
+env.InstallHeaders('DDDisplayInterface', [
+    'DisplayInterface.h',
+    'KeypressEventHandler.h',
+    'MainPage.h',
+    'MainWindow.h',
+    'QOSGWidget.h',
+    'ScreenshotCallback.h',
+    ])

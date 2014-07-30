@@ -1,0 +1,49 @@
+###############################################################################
+## @file      SConscript
+## @author    Chris L Baker (clb) <chris@chimail.net>
+## @date      2014.05.20
+## @brief     SConscript for Developer Debug Display lib
+##
+## @attention Copyright (C) 2014
+## @attention All rights reserved
+###############################################################################
+
+Import( 'env' )
+
+env.InstallLib(
+    env.SharedLibrary(
+        target = 'DDDisplayObjects',
+        source = [
+            'Capsules.cpp',
+            'Colors.cpp',
+            'Cylinders.cpp',
+            'Grids.cpp',
+            'HeadsUpDisplay.cpp',
+            'HeightGrid.cpp',
+            'Lines.cpp',
+            'MeshGrid.cpp',
+            'Points.cpp',
+            'Spheres.cpp',
+            'Triads.cpp',
+            ],
+        LIBS = [
+            'osg',
+            'osgText',
+            'osgManipulator',
+            ],
+        )
+    )
+
+env.InstallHeaders('DDDisplayObjects', [
+    'Capsules.h',
+    'Colors.h',
+    'Cylinders.h',
+    'Grids.h',
+    'HeadsUpDisplay.h',
+    'HeightGrid.h',
+    'Lines.h',
+    'MeshGrid.h',
+    'Points.h',
+    'Spheres.h',
+    'Triads.h',
+    ])

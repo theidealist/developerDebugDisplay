@@ -1,0 +1,8 @@
+* Install:
+
+We depend on qt and osg:
+> sudo apt-get install qt4-dev-tools 
+> sudo apt-get install libopenscenegraph-dev
+
+Once those are installed, just run
+> scons -j<numProcessort> all

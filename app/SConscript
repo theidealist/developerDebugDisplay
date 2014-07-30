@@ -1,0 +1,26 @@
+###############################################################################
+## @file      SConscript
+## @author    Chris L Baker (clb) <chris@chimail.net>
+## @date      2014.05.20
+## @brief     SConscript for Developer Debug Display lib
+##
+## @attention Copyright (C) 2014
+## @attention All rights reserved
+###############################################################################
+
+Import( 'env' )
+
+env.InstallTest(
+    env.Program(
+        target = 'dsp',
+        source = [
+            'dsp.cpp'
+            ],
+        LIBS = [
+            'DDDisplayInterface',
+            'DDDisplayObjects',
+            'boost_filesystem',
+            'boost_program_options',
+            ],
+        )
+    )

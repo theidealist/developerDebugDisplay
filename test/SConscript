@@ -1,0 +1,37 @@
+###############################################################################
+## @file      SConscript
+## @author    Chris L Baker (clb) <chris@chimail.net>
+## @date      2014.05.20
+## @brief     SConscript for Developer Debug Display lib
+##
+## @attention Copyright (C) 2014
+## @attention All rights reserved
+###############################################################################
+
+Import( 'env' )
+
+env.InstallTest(
+    env.Program(
+        target = 'testDeveloperDebugDisplay',
+        source = [
+            'testDeveloperDebugDisplay.cpp'
+            ],
+        LIBS = [
+            'DDDisplayInterface',
+            'DDDisplayObjects',
+            ],
+        )
+    )
+
+env.InstallTest(
+    env.Program(
+        target = 'drawBox',
+        source = [
+            'drawBox.cpp'
+            ],
+        LIBS = [
+            'DDDisplayInterface',
+            'DDDisplayObjects',
+            ],
+        )
+    )
