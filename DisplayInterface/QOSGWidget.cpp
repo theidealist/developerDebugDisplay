@@ -41,6 +41,13 @@ QOSGWidget::QOSGWidget() :
 
     m_pScreenshotCallback(new ScreenshotCallback(GL_BACK))
 {
+    // Allow this widget to get click focus (for setting focus on key events and
+    // such)
+    setFocusPolicy(Qt::ClickFocus);
+
+    // set mouse tracking so we can get continuous updates of the mouse events
+    // (i.e. moves) even if we don't use them right now
+    setMouseTracking(true);
 };
 
 /////////////////////////////////////////////////////////////////
