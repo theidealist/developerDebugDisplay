@@ -406,7 +406,7 @@ bool MainWindow::addToEntry(d3DisplayItem* entry,
 {
     // add in the new node (maybe replace)
     if ( replace ) return replaceNode(entry, node, enableNode, myParent);
-    return                 appendNode(entry, node, enableNode, myParent);
+    return                appendNode(entry, node, enableNode, myParent);
 };
 
 /////////////////////////////////////////////////////////////////
@@ -509,8 +509,6 @@ bool MainWindow::addParent(const std::string& parentName,
     // if it's null, we must create it
     if ( nullptr == entry )
     {
-        std::cout << "creating new parent (" << parentName << ") for child (" << childName << ")" << std::endl;
-
         // here is the entry named by the firstPart as a group
         entry = new d3DisplayItem(parentName, new osg::Group());
         entry->setEnabled(true);
