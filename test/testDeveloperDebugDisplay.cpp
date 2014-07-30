@@ -62,10 +62,10 @@ int main(int argc, char* argv[])
     d3::di().add( 'j',
                    [&]()->bool
                    {
-                       std::cout << "Clicked J" << std::endl;
+                       std::cout << "Typed j" << std::endl;
                        return true;
                    },
-                   "Clicking \'j\' is cool" );
+                   "Typing \'j\' is cool" );
 
     bool replace(true);
     d3::di().add( "par::not::appender", d3::get(d3::Point{osg::Vec3(1,0,0), d3::white()}), replace);
