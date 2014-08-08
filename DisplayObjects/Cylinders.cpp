@@ -53,7 +53,9 @@ osg::ref_ptr<osg::Node> get(const CylinderVec_t& cylinders)
         osg::ref_ptr<osg::Material> pMaterial( new osg::Material() );
         pMaterial->setDiffuse( osg::Material::FRONT, cc.color);
         geode->getOrCreateStateSet()->setAttribute( pMaterial, osg::StateAttribute::OVERRIDE );
-    }
+        geode->getOrCreateStateSet()->setMode(GL_BLEND, osg::StateAttribute::ON);
+        geode->getOrCreateStateSet()->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);
+      }
 
     osg::ref_ptr<osg::Group> pAddToThisGroup(new osg::Group());
     pAddToThisGroup->addChild(geode);
