@@ -88,7 +88,7 @@ int main(int argc, char** argv)
     osg::ref_ptr<osg::Node> node( osgDB::readNodeFile(vm["file"].as<boost::filesystem::path>().string()) );
 
     // make a scaling transform
-    osg::ref_ptr<osg::MatrixTransform> xform(new osg::MatrixTransform(osg::Matrix::scale(osg::Vec3(scale,scale,scale))));
+    osg::ref_ptr<osg::MatrixTransform> xform(new osg::MatrixTransform(osg::Matrix::scale(osg::Vec3d(scale,scale,scale))));
     xform->addChild(node);
     if ( node )
         d3::di().add( vm["file"].as<boost::filesystem::path>().string(), xform );

@@ -70,8 +70,8 @@ class QOSGWidget;
 /// int main()
 /// {
 ///     d3::di().add( "first::line",
-///                    d3::get(d3::Line{osg::Vec3(0,0,0),    // begin
-///                                     osg::Vec3(1,1,1),    // end
+///                    d3::get(d3::Line{osg::Vec3d(0,0,0),    // begin
+///                                     osg::Vec3d(1,1,1),    // end
 ///                                     d3::nextColor()}) ); // color
 ///     d3::di().blockForClose();
 ///

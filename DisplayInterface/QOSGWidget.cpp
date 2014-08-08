@@ -74,8 +74,8 @@ void QOSGWidget::initialize()
     m_pOsgViewer->getCamera()->setGraphicsContext(m_pGraphicsWindow);
 
     // The trackball is the best!
-    m_trackballManipulator->setHomePosition(osg::Vec3(20,20,40),
-                                            osg::Vec3(0,0,0),
+    m_trackballManipulator->setHomePosition(osg::Vec3d(20,20,40),
+                                            osg::Vec3d(0,0,0),
                                             osg::Vec3d(0,0,1));
     m_trackballManipulator->setWheelZoomFactor(-2.0 * m_trackballManipulator->getWheelZoomFactor());
     m_trackballManipulator->setMinimumDistance(0.01);

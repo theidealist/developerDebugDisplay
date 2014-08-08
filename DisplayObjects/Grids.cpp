@@ -30,8 +30,8 @@ osg::ref_ptr<osg::Node> get(const GridVec_t& grids)
         {
             lines.push_back
                 ({
-                    osg::Vec3(xx, -grid.halfSpan.y(), 0.0),
-                    osg::Vec3(xx,  grid.halfSpan.y(), 0.0),
+                    osg::Vec3d(xx, -grid.halfSpan.y(), 0.0),
+                    osg::Vec3d(xx,  grid.halfSpan.y(), 0.0),
                     grid.color
                 });
         }
@@ -42,8 +42,8 @@ osg::ref_ptr<osg::Node> get(const GridVec_t& grids)
         {
             lines.push_back
                 ({
-                    osg::Vec3(-grid.halfSpan.x(), yy, 0.0),
-                    osg::Vec3( grid.halfSpan.x(), yy, 0.0),
+                    osg::Vec3d(-grid.halfSpan.x(), yy, 0.0),
+                    osg::Vec3d( grid.halfSpan.x(), yy, 0.0),
                     grid.color
                 });
         }

@@ -169,12 +169,12 @@ HeadsUpDisplay::HeadsUpDisplay(const float& width /* = 1.0 */,
 
     switch ( position )
     {
-    case Position::TOP:     m_text->setPosition( osg::Vec3(10,hh-10,-1.5) );        break;
-    case Position::BOTTOM:  m_text->setPosition( osg::Vec3(10,10,-1.5) );           break;
-    case Position::RIGHT:   m_text->setPosition( osg::Vec3(ww-6*initText.size(),hh-10,-1.5) );     break;
-    case Position::LEFT:    m_text->setPosition( osg::Vec3(0.0, 0.0,-1.5) );        break;
-    case Position::CENTER:  m_text->setPosition( osg::Vec3(ww/2.0-ww*width/2.0+10,hh/2.0,-1.5) ); break;
-    default:                m_text->setPosition( osg::Vec3(ww/2.0,hh/2.0,-1.5) );   break;
+    case Position::TOP:     m_text->setPosition( osg::Vec3d(10,hh-10,-1.5) );        break;
+    case Position::BOTTOM:  m_text->setPosition( osg::Vec3d(10,10,-1.5) );           break;
+    case Position::RIGHT:   m_text->setPosition( osg::Vec3d(ww-6*initText.size(),hh-10,-1.5) );     break;
+    case Position::LEFT:    m_text->setPosition( osg::Vec3d(0.0, 0.0,-1.5) );        break;
+    case Position::CENTER:  m_text->setPosition( osg::Vec3d(ww/2.0-ww*width/2.0+10,hh/2.0,-1.5) ); break;
+    default:                m_text->setPosition( osg::Vec3d(ww/2.0,hh/2.0,-1.5) );   break;
     }
 
     // add the text to the geode

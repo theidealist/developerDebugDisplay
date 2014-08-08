@@ -24,7 +24,7 @@ namespace d3
 struct Sphere
 {
     /// The start of the sphere
-    osg::Vec3 center;
+    osg::Vec3d center;
 
     /// The radius of the sphere
     double radius;

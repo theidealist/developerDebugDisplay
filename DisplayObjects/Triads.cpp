@@ -27,24 +27,24 @@ osg::ref_ptr<osg::Node> get(const TriadVec_t& triads)
         // x-axis
         lines.push_back
             ({
-                osg::Vec3(-0.1,  0.0,  0.0) * triad.pose,
-                osg::Vec3( 1.0,  0.0,  0.0) * triad.pose,
+                osg::Vec3d(-0.1,  0.0,  0.0) * triad.pose,
+                osg::Vec3d( 1.0,  0.0,  0.0) * triad.pose,
                 osg::Vec4( 1.0,  0.0,  0.0, 1.0)
             });
 
         // y-axis
         lines.push_back
             ({
-                osg::Vec3( 0.0, -0.1,  0.0) * triad.pose,
-                osg::Vec3( 0.0,  1.0,  0.0) * triad.pose,
+                osg::Vec3d( 0.0, -0.1,  0.0) * triad.pose,
+                osg::Vec3d( 0.0,  1.0,  0.0) * triad.pose,
                 osg::Vec4( 0.0,  1.0,  0.0, 1.0)
             });
 
         // z-axis
         lines.push_back
             ({
-                osg::Vec3( 0.0, 0.0,-0.1) * triad.pose,
-                osg::Vec3( 0.0, 0.0, 1.0) * triad.pose,
+                osg::Vec3d( 0.0, 0.0,-0.1) * triad.pose,
+                osg::Vec3d( 0.0, 0.0, 1.0) * triad.pose,
                 osg::Vec4( 0.0, 0.0, 1.0, 1.0)
             });
     }

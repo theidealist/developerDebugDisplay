@@ -24,10 +24,10 @@ namespace d3
 struct Capsule
 {
     /// The start of the capsule
-    osg::Vec3 begin;
+    osg::Vec3d begin;
 
     /// The end of the capsule
-    osg::Vec3 end;
+    osg::Vec3d end;
 
     /// The radius of the capsule
     double radius;

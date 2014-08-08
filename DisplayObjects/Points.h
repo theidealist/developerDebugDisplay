@@ -22,7 +22,7 @@ namespace d3
 struct Point
 {
     /// The location of the point
-    osg::Vec3 location;
+    osg::Vec3d location;
 
     /// The color of the point
     osg::Vec4 color;

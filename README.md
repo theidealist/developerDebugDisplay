@@ -17,13 +17,13 @@ The syntax is simply add( name, node ); where "name" is an std::string, and node
     // ddd::di() gets the display interface (singleton)
     // ddd::get(...) gets an osg::Node of type "Lines" where here, we just have a single line
     // This is all nested in the display under first -> line where we can turn on and off each nested element in a tree-view
-    d3::di().add( "first::line", d3::get(d3::Line{osg::Vec3(0,0,0), osg::Vec3(1,1,1), ddd::nextColor()}) );
+    d3::di().add( "first::line", d3::get(d3::Line{osg::Vec3d(0,0,0), osg::Vec3d(1,1,1), ddd::nextColor()}) );
 
     // Here we draw a point at the first level nesting
-    d3::di().add( "first::dot",  d3::get(d3::Point{osg::Vec3(1,0,0), ddd::nextColor()}) );
+    d3::di().add( "first::dot",  d3::get(d3::Point{osg::Vec3d(1,0,0), ddd::nextColor()}) );
 
     // Finally, we add something at a deeper level in the tree
-    d3::di().add( "first::second::deep", d3::get(ddd::Point{osg::Vec3(1,1,0), ddd::nextColor()}) );
+    d3::di().add( "first::second::deep", d3::get(ddd::Point{osg::Vec3d(1,1,0), ddd::nextColor()}) );
 
 ... done ...
 

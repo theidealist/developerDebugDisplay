@@ -24,10 +24,10 @@ namespace d3
 struct Line
 {
     /// The beginning of the line
-    osg::Vec3 begin;
+    osg::Vec3d begin;
 
     /// The end of the line
-    osg::Vec3 end;
+    osg::Vec3d end;
 
     /// The color of the line
     osg::Vec4 color;

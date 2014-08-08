@@ -28,7 +28,7 @@ namespace d3
 ///   double step(0.01);
 ///   for ( double xx(-3.0) ; xx<=3.0 ; xx+=step )
 ///       for ( double yy(-3.0) ; yy<=3.0 ; yy+=step )
-///           points.push_back(ddd::Point{osg::Vec3(xx,yy,perlinNoise.get(xx,yy)), color});
+///           points.push_back(ddd::Point{osg::Vec3d(xx,yy,perlinNoise.get(xx,yy)), color});
 ///
 /// And so the width here is sqrt(points.size()) (since it's square)
 struct MeshGrid
@@ -37,7 +37,7 @@ struct MeshGrid
     PointVec_t points;
 
     /// The normals for each of the points
-    std::vector<osg::Vec3> normals;
+    std::vector<osg::Vec3d> normals;
 
     /// The width of the grid of points
     uint       width;

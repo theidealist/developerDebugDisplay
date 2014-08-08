@@ -24,10 +24,10 @@ namespace d3
 struct Cylinder
 {
     /// The start of the cylinder
-    osg::Vec3 begin;
+    osg::Vec3d begin;
 
     /// The end of the cylinder
-    osg::Vec3 end;
+    osg::Vec3d end;
 
     /// The radius of the cylinder
     double radius;

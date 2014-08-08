@@ -135,7 +135,7 @@
 /// several overloaded namespace functions "get()" which all return an
 /// osg::ref_ptr<osg::Node> object to hand to the add method. For example, one
 /// takes a d3::Line object which is created with two points and a color. The
-/// second example is a d3::Point object which takes an osg::Vec3 point and a
+/// second example is a d3::Point object which takes an osg::Vec3d point and a
 /// color. So, drawing simple stuff is just that easy.
 ///
 /// Notice the include paths are all plural (i.e. Points.h). This is because

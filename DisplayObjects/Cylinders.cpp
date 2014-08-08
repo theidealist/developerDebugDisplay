@@ -24,26 +24,26 @@ osg::ref_ptr<osg::Node> get(const CylinderVec_t& cylinders)
     osg::ref_ptr<osg::Geode> geode( new osg::Geode() );
     for ( const auto& cc : cylinders )
     {
-        osg::Vec3 pp( cc.begin - cc.end );
+        osg::Vec3d pp( cc.begin - cc.end );
         double height( pp.length() );
         if ( height < 0.000001 ) continue;
 
-        osg::Vec3 center( osg::Vec3((cc.begin.x() + cc.end.x())/2.0,
-                                    (cc.begin.y() + cc.end.y())/2.0,
-                                    (cc.begin.z() + cc.end.z())/2.0) );
+        osg::Vec3d center( (cc.begin.x() + cc.end.x())/2.0,
+                           (cc.begin.y() + cc.end.y())/2.0,
+                           (cc.begin.z() + cc.end.z())/2.0 );
 
         // This is the default direction for the cylinders to face in OpenGL
-        static const osg::Vec3 ZZ( osg::Vec3(0,0,1) );
+        static const osg::Vec3d ZZ( 0,0,1 );
 
         // Get CROSS product (the axis of rotation)
-        osg::Vec3 tt( ZZ^pp );
+        osg::Vec3d tt( ZZ^pp );
 
         // Get angle. length is magnitude of the vector
         double angle( acos( (ZZ * pp) / height) );
 
         // Create a cylinder between the two points with the given radius
         osg::ref_ptr<osg::Cylinder> cylinder( new osg::Cylinder(center, cc.radius, height) );
-        cylinder->setRotation(osg::Quat(angle, osg::Vec3(tt.x(), tt.y(), tt.z())));
+        cylinder->setRotation(osg::Quat(angle, osg::Vec3d(tt.x(), tt.y(), tt.z())));
 
         // A geode to hold the cylinder
         osg::ref_ptr<osg::ShapeDrawable> cylinderDrawable( new osg::ShapeDrawable(cylinder) );
