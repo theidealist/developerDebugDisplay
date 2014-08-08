@@ -33,7 +33,7 @@ bool KeypressEventHandler::add(const osgGA::GUIEventAdapter::KeySymbol& key,
                                const std::string& description)
 {
     // add this key handler to the map
-    m_keyFuncMap[key] = {key, func, description};
+    m_keyFuncMap[key].push_back({key, func, description});
 
     return true;
 };
@@ -48,11 +48,15 @@ bool KeypressEventHandler::handle(const osgGA::GUIEventAdapter& eventAdapter,
         return false;
 
     // find this handler
-    std::map<char, KeyFunctionMap>::iterator itt( m_keyFuncMap.find(eventAdapter.getKey()) );
+    KeyMap_t::iterator itt( m_keyFuncMap.find(eventAdapter.getKey()) );
     if ( m_keyFuncMap.end() == itt ) return false;
 
-    // envoke the function
-    return itt->second.func();
+    // envoke the function(s)
+    bool rv(true);
+    for ( const auto& entry : itt->second )
+        rv &= entry.func();
+
+    return rv;
 };
 
 } // namespace d3

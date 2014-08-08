@@ -67,6 +67,22 @@ int main(int argc, char* argv[])
                    },
                    "Typing \'j\' is cool" );
 
+    d3::di().add( 'j',
+                   [&]()->bool
+                   {
+                       std::cout << "Typed j - again" << std::endl;
+                       return true;
+                   },
+                   "Typing \'j\' twice is really cool" );
+
+    d3::di().add( 'k',
+                   [&]()->bool
+                   {
+                       std::cout << "Typed k" << std::endl;
+                       return true;
+                   },
+                   "Typing \'k\' is cool" );
+
     bool replace(true);
     d3::di().add( "par::not::appender", d3::get(d3::Point{osg::Vec3d(1,0,0), d3::white()}), replace);
     d3::di().add( "par::not::appender", d3::get(d3::Point{osg::Vec3d(2,0,0), d3::white()}), replace);

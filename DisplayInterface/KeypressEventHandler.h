@@ -62,8 +62,10 @@ class KeypressEventHandler : public osgGA::GUIEventHandler
         std::string desc;
     };
 
+    typedef std::map<char, std::list<KeyFunctionMap>> KeyMap_t;
+
     /// The basic mapping from a key to a function map entry
-    std::map<char, KeyFunctionMap> m_keyFuncMap;
+    KeyMap_t m_keyFuncMap;
 };
 
 } // namespace d3
