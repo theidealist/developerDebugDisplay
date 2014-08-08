@@ -166,11 +166,17 @@ class DisplayInterface
 
     /// @brief   Track a node with the camera
     /// @param   node The node to track
+    /// @param   eye The position of the eye in the node's frame
+    /// @param   center The center point of the trackball
+    /// @param   up The up vector of the camera
     ///
     /// This method will track a node with the camera. The current manipulator
     /// mode is the trackball which can still be adjusted, but the camera will
     /// move with the node and will for look at and orbit around the node.
-    bool track(const osg::ref_ptr<osg::Node>& node);
+    bool track(const osg::ref_ptr<osg::Node>& node,
+               const osg::Vec3d eye = osg::Vec3d{20.0, 20.0, 40.0},
+               const osg::Vec3d center = osg::Vec3d{0.0, 0.0, 0.0},
+               const osg::Vec3d up = osg::Vec3d{0.0, 0.0, 1.0} );
 
     /// @brief   Method to wait for a display to close
     ///

@@ -125,13 +125,16 @@ void QOSGWidget::setClearColor(const osg::Vec4& color)
 
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
-void QOSGWidget::trackNode(const osg::ref_ptr<osg::Node>& node)
+void QOSGWidget::trackNode(const osg::ref_ptr<osg::Node>& node,
+                           const osg::Vec3d eye,
+                           const osg::Vec3d center,
+                           const osg::Vec3d up)
 {
     m_nodeTrackerManipulator->setTrackerMode(osgGA::NodeTrackerManipulator::NODE_CENTER_AND_ROTATION);
     m_nodeTrackerManipulator->setRotationMode(osgGA::NodeTrackerManipulator::TRACKBALL);
-    m_nodeTrackerManipulator->setHomePosition({20.0,20.0,40.0},
-                                              { 0.0, 0.0, 0.0},
-                                              { 0.0, 0.0, 1.0});
+    m_nodeTrackerManipulator->setHomePosition({ 0.0, 0.0,100.0},
+                                              { 0.0, 0.0,  0.0},
+                                              { 0.0, 1.0,  0.0});
     m_nodeTrackerManipulator->setTrackNode(node);
     setEnableTracking(true);
 };

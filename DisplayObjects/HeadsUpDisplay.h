@@ -53,7 +53,7 @@ class HeadsUpDisplay
 
     /// @brief   Set/Change the text
     /// @param   text The text to update the display with
-    inline void setText(const std::string& text) { m_text->setText(text);   };
+    inline void setText(const std::string& text) { m_text->setText(text); };
 
     /// @brief   Set/Change the color of the text
     /// @param   color The color to set the text in the hud

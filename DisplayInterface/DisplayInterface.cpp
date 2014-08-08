@@ -95,7 +95,10 @@ bool DisplayInterface::add(const char& key,
 
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
-bool DisplayInterface::track(const osg::ref_ptr<osg::Node>& node)
+bool DisplayInterface::track(const osg::ref_ptr<osg::Node>& node,
+                             const osg::Vec3d eye /* = osg::Vec3d{20.0, 20.0, 40.0} */,
+                             const osg::Vec3d center /* = osg::Vec3d{0.0, 0.0, 0.0} */,
+                             const osg::Vec3d up /* = osg::Vec3d{0.0, 0.0, 1.0}*/ )
 {
     // we have data - the display thread needs to know this before we setup the
     // main window
@@ -109,7 +112,7 @@ bool DisplayInterface::track(const osg::ref_ptr<osg::Node>& node)
         return false;
     }
 
-    m_pOsgWidget->trackNode(node);
+    m_pOsgWidget->trackNode(node, eye, center, up);
     return true;
 };
 

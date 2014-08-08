@@ -61,7 +61,13 @@ class QOSGWidget : public QGLWidget
 
     /// @brief   Track a node
     /// @param   node The node to start tracking
-    void trackNode(const osg::ref_ptr<osg::Node>& node);
+    /// @param   eye The position of the eye in the node's frame
+    /// @param   center The center point of the trackball
+    /// @param   up The up vector of the camera
+    void trackNode(const osg::ref_ptr<osg::Node>& node,
+                   const osg::Vec3d eye,
+                   const osg::Vec3d center,
+                   const osg::Vec3d up);
 
     /// @brief   Get the root osg node
     osg::ref_ptr<osg::Group> getRootGroup() const { return m_pRoot; };
