@@ -116,6 +116,8 @@ MainWindow::MainWindow():
 MainWindow::~MainWindow()
 {
     m_timer.stop();
+    m_pModel->clear();
+    m_pTree->reset();
 };
 
 /////////////////////////////////////////////////////////////////
