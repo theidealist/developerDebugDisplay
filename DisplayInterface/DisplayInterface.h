@@ -17,6 +17,7 @@
 
 #include <queue>
 #include <condition_variable>
+#include <thread>
 
 class QWidget;
 class QDockWidget;
@@ -267,6 +268,12 @@ class DisplayInterface
 
     /// Flag to indicate when the setup is complete
     bool                          m_setupComplete;
+
+    /// Thread Running
+    std::thread                   m_displayThread;
+
+    /// flag for thread
+    bool                          m_threadShouldRun;
 };
 
 } // namespace d3

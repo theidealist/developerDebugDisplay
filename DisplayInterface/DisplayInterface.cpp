@@ -12,7 +12,6 @@
 #include "QOSGWidget.h"
 
 #include <iostream>
-#include <thread>
 #include <chrono>
 
 namespace d3
@@ -195,9 +194,12 @@ DisplayInterface::DisplayInterface() :
     m_mutex(),
     m_addNotify(),
     m_haveData(false),
-    m_setupComplete(false)
+    m_setupComplete(false),
+    m_displayThread(),
+    m_threadShouldRun(true)
 {
-    std::thread thrd
+    m_displayThread =
+        std::thread
         ([&]()
          {
              m_setupComplete = false;
@@ -212,6 +214,9 @@ DisplayInterface::DisplayInterface() :
                  // wait for data to be added
                  while ( not m_haveData )
                      m_addNotify.wait(l_lock);
+
+                 if ( not m_threadShouldRun )
+                     return;
 
                  // faked command line args for qt
                  int argc = 1;
@@ -249,7 +254,7 @@ DisplayInterface::DisplayInterface() :
              m_addNotify.notify_all();
 
              // run the application - forever
-             while ( true )
+             while ( m_threadShouldRun )
              {
                  // lock osg so qt doesn't clobber osg
                  if ( m_pOsgWidget->try_lock() )
@@ -268,7 +273,6 @@ DisplayInterface::DisplayInterface() :
                  std::this_thread::sleep_for(std::chrono::milliseconds(10));
              }
          });
-    thrd.detach();
 };
 
 /////////////////////////////////////////////////////////////////
@@ -288,6 +292,12 @@ DisplayInterface::~DisplayInterface()
         if ( not m_pMainWindow->close() )
             std::cerr << "BUMMER: Could not close the window" << std::endl;
     }
+
+    m_haveData = true;
+    m_threadShouldRun = false;
+    if ( not m_setupComplete )
+        m_addNotify.notify_all();
+    m_displayThread.join();
 };
 
 /////////////////////////////////////////////////////////////////
