@@ -36,19 +36,19 @@ typedef std::vector<Triad> TriadVec_t;
 
 /// @brief   get an osg node from a vector of triads
 /// @param   triads The triads we should draw
-osg::ref_ptr<osg::Node> get(const TriadVec_t& grids);
+osg::ref_ptr<osg::Node> get(const TriadVec_t& grids, const double& scale = 1.0);
 
 /// @brief   get an osg node from a single triad
 /// @param   triad The triad that we should draw
-inline osg::ref_ptr<osg::Node> get(const Triad& triad)
+inline osg::ref_ptr<osg::Node> get(const Triad& triad, const double& scale = 1.0)
 {
-    return get(TriadVec_t(1, triad));
+    return get(TriadVec_t(1, triad), scale);
 };
 
 /// @brief   Convenience for drawing the origin
 inline osg::ref_ptr<osg::Node> origin()
 {
-    return get(Triad{osg::Matrix::identity()});
+    return get(Triad{osg::Matrix::identity()}, 1.0);
 };
 
 } // namespace d3
