@@ -13,9 +13,21 @@ import os
 import SCons.Util
 
 # where we should install stuff
-libDir = os.environ['HOME'] + '/Installed/lib/'
-binDir = os.environ['HOME'] + '/Installed/bin/'
-includeDir = os.environ['HOME'] + '/Installed/include/'
+libDir = ""
+binDir = ""
+includeDir = ""
+
+# Make invokes scons with destdir set when packaging.  This variable helps us detect if that is the case
+destDir = os.getenv('DESTDIR', '')
+
+if len(destDir) == 0: # If DESTDIR environment variable is not set, just install to home (so we don't need root)
+   libDir = os.environ['HOME'] + '/Installed/lib/'
+   binDir = os.environ['HOME'] + '/Installed/bin/'
+   includeDir = os.environ['HOME'] + '/Installed/include/'
+else
+   libDir = destDir + "/usr/include/"
+   binDir = destDir + "/usr/bin/"
+   includeDir = destDir + "/usr/include/"
 
 # init our construction env
 env = Environment(
@@ -38,7 +50,6 @@ env = Environment(
     CXXFLAGS = [
         '-lstdc++',
         '-std=c++0x',
-        '-isystem/usr/include/qwt',
         '-isystem/usr/include/qt4',
         '-isystem/usr/include/qt4/Qt',
         '-isystem/usr/include/qwt',
