@@ -19,6 +19,7 @@
 #include <DDDisplayObjects/HeadsUpDisplay.h> // flashing awesome
 
 /// std stuff
+#include <chrono>
 #include <thread>
 
 int main()
@@ -54,7 +55,7 @@ int main()
                  }
 
                  // flash at about 2Hz
-                 usleep(500000);
+                 std::this_thread::sleep_for(std::chrono::milliseconds(500));
              }
          });
 
