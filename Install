@@ -1,8 +1,7 @@
 * Install:
 
-We depend on qt and osg:
-> sudo apt-get install qt4-dev-tools 
-> sudo apt-get install libopenscenegraph-dev
+We depend on qt and osg (and on a couple of boost modules for the test apps):
+> sudo apt-get install qt4-dev-tools libopenscenegraph-dev libboost-program-options-dev libboost-filesystem-dev
 
 Once those are installed, just run
-> scons -j<numProcessort> all
+> scons -j<numProcessors> all
