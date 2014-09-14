@@ -23,7 +23,7 @@ osg::ref_ptr<osg::Node> get(const LineVec_t& lines)
     // define the color array - these are all the colors we need!
     osg::ref_ptr<osg::Vec4Array> osgColors( new osg::Vec4Array() );
 
-    // here are the lines to add
+    // here are the lines lto add
     osg::ref_ptr<osg::Vec3Array> verts( new osg::Vec3Array() );
 
     // color mapping
@@ -55,7 +55,7 @@ osg::ref_ptr<osg::Node> get(const LineVec_t& lines)
     // now add all this stuff to the geometry object
     cloudGeometry->setVertexArray(verts);
     cloudGeometry->setColorArray(osgColors);
-    cloudGeometry->setColorIndices(colorIndexArray);
+    //cloudGeometry->setColorIndices(colorIndexArray);
     cloudGeometry->setColorBinding(osg::Geometry::BIND_PER_VERTEX);
     cloudGeometry->addPrimitiveSet(theLines);
 
