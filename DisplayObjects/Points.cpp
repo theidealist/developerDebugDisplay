@@ -70,7 +70,7 @@ osg::ref_ptr<osg::Node> get(const PointVec_t& points,
     osg::ref_ptr<osg::Geometry> cloudGeometry( new osg::Geometry() );
     cloudGeometry->setVertexArray(verts);
     cloudGeometry->setColorArray(osgColors);
-    cloudGeometry->setColorIndices(colorIndexArray);
+    //cloudGeometry->setColorIndices(colorIndexArray);
     cloudGeometry->setColorBinding(osg::Geometry::BIND_PER_VERTEX);
     cloudGeometry->addPrimitiveSet(theCloud);
 
