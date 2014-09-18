@@ -24,8 +24,8 @@ if len(destDir) == 0: # If DESTDIR environment variable is not set, just install
    libDir = os.environ['HOME'] + '/Installed/lib/'
    binDir = os.environ['HOME'] + '/Installed/bin/'
    includeDir = os.environ['HOME'] + '/Installed/include/'
-else
-   libDir = destDir + "/usr/include/"
+else:
+   libDir = destDir + "/usr/lib/"
    binDir = destDir + "/usr/bin/"
    includeDir = destDir + "/usr/include/"
 
@@ -75,7 +75,7 @@ def InstallLib(lib):
     global env
     env.Alias('libs', env.Install(env.libDir, lib))
     env.Alias('all',  env.Install(env.libDir, lib))
-    env.Alias(str(lib[0]), env.Install(env.binDir, lib))
+    env.Alias(str(lib[0]), env.Install(env.libDir, lib))
 env.InstallLib = InstallLib
 
 # standard way to install headers
