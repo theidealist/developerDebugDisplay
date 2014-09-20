@@ -1,0 +1,27 @@
+Source: developer-debug-display
+Priority: optional
+Maintainer: Patrick McMichael <mcmichaelps1@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), scons
+Standards-Version: 3.9.5
+Section: libs
+Homepage: https://github.com/col-b/developerDebugDisplay
+#Vcs-Git: git://git.debian.org/collab-maint/developer-debug-display.git
+#Vcs-Browser: http://git.debian.org/?p=collab-maint/developer-debug-display.git;a=summary
+
+Package: developer-debug-display-dev
+Section: libdevel
+Architecture: any
+Depends: developer-debug-display (= ${binary:Version}), ${misc:Depends}
+Description: 3D algorithm visualization utility (development files)
+ A simple 3D display based on QT and OpenSceneGraph aimed specifically 
+ at developers who need a quick debug tool that does 3D display without 
+ taking over your entire application.
+
+Package: developer-debug-display
+Section: libs
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: 3D algorithm visualization utility (runtime files)
+ A simple 3D display based on QT and OpenSceneGraph aimed specifically 
+ at developers who need a quick debug tool that does 3D display without 
+ taking over your entire application.
