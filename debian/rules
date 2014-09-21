@@ -17,17 +17,15 @@ clean:
 	dh clean
 
 build:
-	echo "Building with scons lib and target dest /tmp/ddd-discard for target $@"
+	echo "Building with scons libs and target dest /tmp/ddd-discard for target $@"
 	mkdir -p /tmp/ddd-discard
 	DESTDIR=/tmp/ddd-discard scons libs
 	rm -rf /tmp/ddd-discard
 	dh build
     
 binary:
-	echo "Building binary with scons lib and target dest /tmp/ddd-discard for target $@"
-	mkdir -p /tmp/ddd-discard
-	scons libs
-	rm -rf /tmp/ddd-discard
+	echo "Building binary with scons libs and target dest / for target $@"
+	DESTDIR=/ scons libs
 	dh binary
 
 install:
