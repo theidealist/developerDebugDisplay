@@ -7,3 +7,24 @@
 %:
 	echo "Invoking debhelper $@"
 	dh $@ 
+
+clean:
+	echo "Invoking scons -c for target $@"
+	scons -c
+	dh @
+
+build:
+	echo "Building with scons lib and target dest /tmp/ddd-discard for target $@"
+	mkdir -p /tmp/ddd-discard
+	DEST=/tmp/ddd-discard scons lib
+	rm -rf /tmp/ddd-discard
+    
+binary:
+	echo "Building binary with scons lib and target dest /tmp/ddd-discard for target $@"
+	mkdir -p /tmp/ddd-discard
+	DEST=/tmp/ddd-discard scons lib
+	rm -rf /tmp/ddd-discard
+
+install:
+	echo "Installing binary and headers to $DESTDIR for target $@"
+	scons lib
