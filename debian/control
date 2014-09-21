@@ -1,7 +1,7 @@
 Source: developer-debug-display
 Priority: optional
 Maintainer: Patrick McMichael <mcmichaelps1@gmail.com>
-Build-Depends: debhelper (>= 9.0.0), scons
+Build-Depends: debhelper (>= 9.0.0), scons, libopenscenegraph-dev, qt4-dev-tools
 Standards-Version: 3.9.5
 Section: libs
 Homepage: https://github.com/col-b/developerDebugDisplay
@@ -11,7 +11,7 @@ Homepage: https://github.com/col-b/developerDebugDisplay
 Package: developer-debug-display-dev
 Section: libdevel
 Architecture: any
-Depends: developer-debug-display (= ${binary:Version}), ${misc:Depends}
+Depends: (= ${binary:Version}), ${misc:Depends}
 Description: 3D algorithm visualization utility (development files)
  A simple 3D display based on QT and OpenSceneGraph aimed specifically 
  at developers who need a quick debug tool that does 3D display without 
