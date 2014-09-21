@@ -6,4 +6,4 @@
 
 %:
 	echo "Invoking debhelper $@"
-	#dh $@ 
+	dh $@ 
