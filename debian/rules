@@ -2,7 +2,10 @@
 # -*- makefile -*-
 
 # Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
+export DH_VERBOSE=1
+
+# Possible targets
+#binary binary-arch binary-indep build build-arch build-indep clean install install-arch install-indep
 
 %:
 	echo "Invoking debhelper $@"
@@ -11,23 +14,23 @@
 clean:
 	echo "Invoking scons -c for target $@"
 	scons -c
-	dh @
+	dh clean
 
 build:
 	echo "Building with scons lib and target dest /tmp/ddd-discard for target $@"
 	mkdir -p /tmp/ddd-discard
 	DEST=/tmp/ddd-discard scons lib
 	rm -rf /tmp/ddd-discard
-	dh @
+	dh build
     
 binary:
 	echo "Building binary with scons lib and target dest /tmp/ddd-discard for target $@"
 	mkdir -p /tmp/ddd-discard
 	DEST=/tmp/ddd-discard scons lib
 	rm -rf /tmp/ddd-discard
-	dh @
+	dh binary
 
 install:
 	echo "Installing binary and headers to $DESTDIR for target $@"
 	scons lib
-	dh @
+	dh install
