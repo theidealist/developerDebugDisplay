@@ -25,7 +25,8 @@ build:
     
 binary:
 	echo "Building binary with scons libs and target dest / for target $@"
-	DESTDIR=/ scons libs
+	echo $PWD
+	DESTDIR=. scons libs
 	dh binary
 
 install:
