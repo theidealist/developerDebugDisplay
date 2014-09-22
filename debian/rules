@@ -25,8 +25,8 @@ build:
     
 binary:
 	echo "Building binary with scons libs and target dest / for target $@"
-	echo $PWD
-	DESTDIR=. scons libs
+	echo `pwd`
+	DESTDIR=debian/tmp scons libs
 	dh binary
 
 install:
