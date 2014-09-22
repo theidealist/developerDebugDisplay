@@ -24,7 +24,7 @@ build:
 	dh build
 	
 override_dh_auto_install:
-    echo "Overrding dh_auto_install target"
+	echo "Overrding dh_auto_install target"
 	DESTDIR=$$(pwd)/debian/tmp scons libs
     
 #binary:
@@ -33,7 +33,8 @@ override_dh_auto_install:
 #	DESTDIR=debian/tmp scons libs
 #	dh binary
 
-#install:
-#	echo "Installing binary and headers to $DESTDIR for target $@"
-#	scons libs
-#	dh install
+install:
+	echo "Installing binary and headers to $DESTDIR for target $@"
+	DESTDIR=$$(pwd)/debian/developer-debug-display/ scons libs
+	DESTDIR=$$(pwd)/debian/developer-debug-display-dev/ scons libs
+	dh install
