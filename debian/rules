@@ -22,14 +22,17 @@ build:
 	DESTDIR=/tmp/ddd-discard scons libs
 	rm -rf /tmp/ddd-discard
 	dh build
+	
+override_dh_auto_install:
+        DESTDIR=$$(pwd)/debian/ scons libs
     
-binary:
-	echo "Building binary with scons libs and target dest / for target $@"
-	echo `pwd`
-	DESTDIR=debian/tmp scons libs
-	dh binary
+#binary:
+#	echo "Building binary with scons libs and target dest / for target $@"
+#	echo `pwd`
+#	DESTDIR=debian/tmp scons libs
+#	dh binary
 
-install:
-	echo "Installing binary and headers to $DESTDIR for target $@"
-	scons libs
-	dh install
+#install:
+#	echo "Installing binary and headers to $DESTDIR for target $@"
+#	scons libs
+#	dh install
