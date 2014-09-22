@@ -20,18 +20,27 @@ namespace d3
 DisplayInterface& di()
 {
     // forward to the singleton getter
-    return DisplayInterface::get();
+    static std::shared_ptr<DisplayInterface> DI(DisplayInterface::get());
+    return *(DI.get());
 };
 
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
-DisplayInterface& DisplayInterface::get()
+std::shared_ptr<DisplayInterface> DisplayInterface::get()
 {
     // create the static instance
-    static DisplayInterface instance;
+    static std::shared_ptr<DisplayInterface> pInstance;
+    if ( not pInstance )
+    {
+        static std::mutex mutex;
+        mutex.lock();
+        if ( not pInstance )
+            pInstance.reset( new DisplayInterface(), [](DisplayInterface* DI){ delete DI; } );
+        mutex.unlock();
+    }
 
     // return the static instance
-    return instance;
+    return pInstance;
 };
 
 /////////////////////////////////////////////////////////////////
