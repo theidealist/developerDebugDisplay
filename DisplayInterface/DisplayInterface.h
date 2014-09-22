@@ -204,6 +204,10 @@ class DisplayInterface
     /// @return  boolean True if successful lock is obtained
     bool lock();
 
+    /// @brief   Method to try_lock the osg window
+    /// @return  boolean True if successful lock is obtained
+    bool try_lock() __attribute__((warn_unused_result));
+
     /// @brief   Method to unlock a previously locked session
     /// @return  boolean True if successful lock is released (really just if the
     ///          window has not been created, we can't "unlock" it, so false is

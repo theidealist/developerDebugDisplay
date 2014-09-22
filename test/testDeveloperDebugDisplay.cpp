@@ -152,9 +152,11 @@ int main(int argc, char* argv[])
         hud0.setText(ss.str());
         hud0.setTextColor(d3::nextColor());
 
-        d3::di().lock();
-        pointXform->setMatrix(osg::Matrix::translate(xOffset, 0, 0));
-        d3::di().unlock();
+        if ( d3::di().try_lock() )
+        {
+            pointXform->setMatrix(osg::Matrix::translate(xOffset, 0, 0));
+            d3::di().unlock();
+        }
 
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }

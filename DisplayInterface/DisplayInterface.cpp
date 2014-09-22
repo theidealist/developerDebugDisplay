@@ -156,6 +156,17 @@ bool DisplayInterface::lock()
         m_pOsgWidget->lock();
         return true;
     }
+
+    m_pOsgWidget->lock();
+    return true;
+};
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+bool DisplayInterface::try_lock()
+{
+    if ( m_pOsgWidget )
+        return m_pOsgWidget->try_lock();
     return false;
 };
 

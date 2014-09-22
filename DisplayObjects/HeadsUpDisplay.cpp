@@ -192,6 +192,24 @@ HeadsUpDisplay::~HeadsUpDisplay()
 
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
+void HeadsUpDisplay::setText(const std::string& text)
+{
+    di().lock();
+    m_text->setText(text);
+    di().unlock();
+};
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+void HeadsUpDisplay::setTextColor(const osg::Vec4& color)
+{
+    di().lock();
+    m_text->setColor(color);
+    di().unlock();
+};
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 void HeadsUpDisplay::setBackgroundColor(const osg::Vec4& color)
 {
     // setup the background colors - user defined
@@ -229,7 +247,9 @@ void HeadsUpDisplay::setDefaultBackgrounColor()
 void HeadsUpDisplay::show(const bool& display)
 {
     // set the node mask based on the display parameter
+    di().lock();
     m_root->setNodeMask(display?~0:0);
+    di().unlock();
 };
 
 /////////////////////////////////////////////////////////////////

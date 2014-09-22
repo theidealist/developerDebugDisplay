@@ -47,9 +47,11 @@ int main()
              {
                  // we are messing directly with things in the render thread -
                  // make sure we lock the display interface
-                 d3::di().lock();
-                 hud.show(not hud.isShown());
-                 d3::di().unlock();
+                 if ( d3::di().try_lock() )
+                 {
+                     hud.show(not hud.isShown());
+                     d3::di().unlock();
+                 }
 
                  // flash at about 2Hz
                  usleep(500000);
