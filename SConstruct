@@ -33,7 +33,7 @@ env = Environment(
     QT_MOCFROMHFLAGS = '-I/usr/include/qt4 -DQT_NO_KEYWORDS',
 
     # regular c++ stuff
-    CCFLAGS = [ '-Wempty-body', '-Wall', '-Wshadow', '-Winit-self', '-O2' ],
+    CCFLAGS = [ '-Wempty-body', '-Wall', '-Wshadow', '-Winit-self', '-O2', '-g', '-pthread' ],
     CPPFLAGS = [ '-Wno-deprecated' ],
     CXXFLAGS = [
         '-lstdc++',

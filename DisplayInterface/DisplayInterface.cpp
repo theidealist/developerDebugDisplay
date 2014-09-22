@@ -65,7 +65,7 @@ bool DisplayInterface::add(const std::string& name,
     std::lock_guard<std::mutex> l_lock(m_mutex);
 
     // add this node to the main window
-    static bool showNode(true);
+    static const bool showNode(true);
     return m_pMainWindow->add(name, node, showNode, replace);
 };
 
@@ -151,10 +151,12 @@ bool DisplayInterface::running() const
 /////////////////////////////////////////////////////////////////
 bool DisplayInterface::lock()
 {
-    if ( m_pOsgWidget )
+    // make sure the main window has been setup
+    if ( not setupMainWindow() )
     {
-        m_pOsgWidget->lock();
-        return true;
+        std::cerr << "BUMMER: No main window for you" << std::endl;
+        m_haveData = false;
+        return false;
     }
 
     m_pOsgWidget->lock();
