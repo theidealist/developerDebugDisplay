@@ -24,7 +24,8 @@ build:
 	dh build
 	
 override_dh_auto_install:
-        DESTDIR=$$(pwd)/debian/ scons libs
+    echo "Overrding dh_auto_install target"
+	DESTDIR=$$(pwd)/debian/tmp scons libs
     
 #binary:
 #	echo "Building binary with scons libs and target dest / for target $@"
