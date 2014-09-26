@@ -20,18 +20,27 @@ namespace d3
 DisplayInterface& di()
 {
     // forward to the singleton getter
-    return DisplayInterface::get();
+    static std::shared_ptr<DisplayInterface> DI(DisplayInterface::get());
+    return *(DI.get());
 };
 
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
-DisplayInterface& DisplayInterface::get()
+std::shared_ptr<DisplayInterface> DisplayInterface::get()
 {
     // create the static instance
-    static DisplayInterface instance;
+    static std::shared_ptr<DisplayInterface> pInstance;
+    if ( not pInstance )
+    {
+        static std::mutex mutex;
+        mutex.lock();
+        if ( not pInstance )
+            pInstance.reset( new DisplayInterface(), [](DisplayInterface* DI){ delete DI; } );
+        mutex.unlock();
+    }
 
     // return the static instance
-    return instance;
+    return pInstance;
 };
 
 /////////////////////////////////////////////////////////////////
@@ -56,7 +65,7 @@ bool DisplayInterface::add(const std::string& name,
     std::lock_guard<std::mutex> l_lock(m_mutex);
 
     // add this node to the main window
-    static bool showNode(true);
+    static const bool showNode(true);
     return m_pMainWindow->add(name, node, showNode, replace);
 };
 
@@ -142,11 +151,24 @@ bool DisplayInterface::running() const
 /////////////////////////////////////////////////////////////////
 bool DisplayInterface::lock()
 {
-    if ( m_pOsgWidget )
+    // make sure the main window has been setup
+    if ( not setupMainWindow() )
     {
-        m_pOsgWidget->lock();
-        return true;
+        std::cerr << "BUMMER: No main window for you" << std::endl;
+        m_haveData = false;
+        return false;
     }
+
+    m_pOsgWidget->lock();
+    return true;
+};
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+bool DisplayInterface::try_lock()
+{
+    if ( m_pOsgWidget )
+        return m_pOsgWidget->try_lock();
     return false;
 };
 

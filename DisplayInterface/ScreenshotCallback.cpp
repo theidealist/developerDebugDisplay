@@ -24,7 +24,7 @@ ScreenshotCallback::ScreenshotCallback(GLenum glBuffer,
                                        const std::string& basename /* = snap_ */ ) :
     m_glBuffer(glBuffer),
     m_basename(basename),
-    m_image(new osg::Image),
+    m_image(),
     m_mutex(),
     m_continuousCapture(false),
     m_singleSnapshot(false)
@@ -58,6 +58,8 @@ void ScreenshotCallback::grab()
 /////////////////////////////////////////////////////////////////
 void ScreenshotCallback::operator()(osg::RenderInfo& renderInfo) const
 {
+    if ( not m_image ) const_cast<ScreenshotCallback*>(this)->m_image = new osg::Image();
+
     if ( m_continuousCapture || m_singleSnapshot )
     {
         m_singleSnapshot = false;

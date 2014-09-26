@@ -144,10 +144,12 @@ void QOSGWidget::trackNode(const osg::ref_ptr<osg::Node>& node,
 void QOSGWidget::updateGL()
 {
     // do the frame and update
-    lock();
-    m_pOsgViewer->frame();
-    QGLWidget::updateGL();
-    unlock();
+    if ( m_pOsgViewer && try_lock() )
+    {
+        m_pOsgViewer->frame();
+        QGLWidget::updateGL();
+        unlock();
+    }
 };
 
 /////////////////////////////////////////////////////////////////

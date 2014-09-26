@@ -90,8 +90,9 @@ class DisplayInterface
     DisplayInterface& operator=(const DisplayInterface&) = delete;
     /// @}
 
-    /// @brief   The singleton static instance
-    static DisplayInterface& get();
+    /// @brief   The singleton static instance as a shared pointer
+    /// @note    Don't use this, use the di() global function interface
+    static std::shared_ptr<DisplayInterface> get();
 
     /// @brief   Method to add stuff to the display
     /// @param   name The name of the thing we are adding - a note on the naming
@@ -202,6 +203,10 @@ class DisplayInterface
     /// @brief   Method to lock the osg window
     /// @return  boolean True if successful lock is obtained
     bool lock();
+
+    /// @brief   Method to try_lock the osg window
+    /// @return  boolean True if successful lock is obtained
+    bool try_lock() __attribute__((warn_unused_result));
 
     /// @brief   Method to unlock a previously locked session
     /// @return  boolean True if successful lock is released (really just if the

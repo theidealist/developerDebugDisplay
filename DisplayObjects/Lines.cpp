@@ -60,8 +60,7 @@ osg::ref_ptr<osg::Node> get(const LineVec_t& lines)
     cloudGeometry->addPrimitiveSet(theLines);
 
     // set the state - line size and lighting
-    osg::ref_ptr<osg::StateSet> cloudStateSet( cloudGeometry->getOrCreateStateSet() );
-    cloudStateSet->setMode(GL_LIGHTING, osg::StateAttribute::OFF);
+    cloudGeometry->getOrCreateStateSet()->setMode(GL_LIGHTING, osg::StateAttribute::OFF);
 
     // create and return the geode
     osg::ref_ptr<osg::Geode> geode(new osg::Geode());
