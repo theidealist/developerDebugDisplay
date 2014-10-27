@@ -45,9 +45,9 @@ osg::ref_ptr<osg::Node> get(const MeshGrid& meshGrid)
     osg::ref_ptr<osg::Geometry> polygon( new osg::Geometry() );
     polygon->setVertexArray( vertices.get() );
     polygon->setNormalArray( normals.get() );
-    polygon->setColorArray( colors.get() );
+    polygon->setColorArray( colors.get(), osg::Array::Binding::BIND_PER_VERTEX );
     polygon->setNormalBinding( osg::Geometry::BIND_OVERALL );
-    polygon->setColorBinding( osg::Geometry::BIND_PER_VERTEX );
+    //polygon->setColorBinding( osg::Geometry::BIND_PER_VERTEX );
     if ( not meshGrid.fill )
     {
         polygon->getOrCreateStateSet()->
