@@ -59,6 +59,18 @@ int main(int argc, char* argv[])
     d3::di().add( "first::sphere",
                    d3::get(d3::Sphere{osg::Vec3d(1,2,3), 0.1, osg::Vec4(0.2, 0.3, 0.4, 0.5)}) );
 
+    d3::PointVec_t pts;
+    for ( double xx(-1.0) ; xx<=1.0 ; xx+=0.1 )
+        for ( double yy(-1.0) ; yy<=1.0 ; yy+=0.1 )
+            pts.push_back(d3::Point{{xx,yy,0.0}, {0,0,1,1}});
+    d3::di().add( "cloud", d3::get(pts) );
+
+    d3::PointVec_t cpts;
+    for ( double xx(-1.0) ; xx<=1.0 ; xx+=0.1 )
+        for ( double yy(-1.0) ; yy<=1.0 ; yy+=0.1 )
+            cpts.push_back(d3::Point{{xx,yy,3.0}, d3::nextColor()});
+    d3::di().add( "color cloud", d3::get(cpts) );
+
     d3::di().add( 'j',
                    [&]()->bool
                    {
