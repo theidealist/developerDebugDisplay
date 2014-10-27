@@ -49,14 +49,10 @@ osg::ref_ptr<osg::Node> get(const LineVec_t& lines)
         theLines->push_back(index++);
     }
 
-    // create the geometry and add it to the geode
-    osg::ref_ptr<osg::Geometry> cloudGeometry( new osg::Geometry() );
-
     // now add all this stuff to the geometry object
+    osg::ref_ptr<osg::Geometry> cloudGeometry( new osg::Geometry() );
     cloudGeometry->setVertexArray(verts);
-    cloudGeometry->setColorArray(osgColors);
-    //cloudGeometry->setColorIndices(colorIndexArray);
-    cloudGeometry->setColorBinding(osg::Geometry::BIND_PER_VERTEX);
+    cloudGeometry->setColorArray(osgColors, osg::Array::Binding::BIND_PER_VERTEX);
     cloudGeometry->addPrimitiveSet(theLines);
 
     // set the state - line size and lighting

@@ -132,6 +132,9 @@ HeadsUpDisplay::HeadsUpDisplay(const float& width /* = 1.0 */,
     // set the normals for the background
     osg::ref_ptr<osg::Vec3Array> hudnormals( new osg::Vec3Array() );
     hudnormals->push_back( {0.0, 0.0, 1.0} );
+    hudnormals->push_back( {0.0, 0.0, 1.0} );
+    hudnormals->push_back( {0.0, 0.0, 1.0} );
+    hudnormals->push_back( {0.0, 0.0, 1.0} );
 
     // create the actual geometry for the hud
     m_hudBackgroundGeometry->setTexCoordArray(0,texcoords);
@@ -139,8 +142,6 @@ HeadsUpDisplay::HeadsUpDisplay(const float& width /* = 1.0 */,
     m_hudBackgroundGeometry->setNormalBinding(osg::Geometry::BIND_OVERALL);
     m_hudBackgroundGeometry->addPrimitiveSet(hudBackgroundIndices);
     m_hudBackgroundGeometry->setVertexArray(hudBackgroundVertices);
-    //hudBackgroundGeometry->setColorArray(hudcolors);
-    m_hudBackgroundGeometry->setColorBinding(osg::Geometry::BIND_PER_VERTEX);
 
     // create the actual texture
     osg::ref_ptr<osg::Texture2D> hudTexture( new osg::Texture2D() );
@@ -221,7 +222,7 @@ void HeadsUpDisplay::setBackgroundColor(const osg::Vec4& color)
 
     // set the color in the backgroun geometry
     di().lock();
-    m_hudBackgroundGeometry->setColorArray(hudcolors);
+    m_hudBackgroundGeometry->setColorArray(hudcolors, osg::Array::Binding::BIND_PER_VERTEX);
     di().unlock();
 };
 
@@ -238,7 +239,7 @@ void HeadsUpDisplay::setDefaultBackgrounColor()
 
     // set the color in the backgroun geometry
     di().lock();
-    m_hudBackgroundGeometry->setColorArray(hudcolors);
+    m_hudBackgroundGeometry->setColorArray(hudcolors, osg::Array::Binding::BIND_PER_VERTEX);
     di().unlock();
 };
 
