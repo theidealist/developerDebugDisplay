@@ -16,6 +16,7 @@
 #include <osg/Geode>
 #include <osg/MatrixTransform>
 #include <osgText/Text>
+#include <osg/Version>
 
 #include <iostream>
 
@@ -222,7 +223,12 @@ void HeadsUpDisplay::setBackgroundColor(const osg::Vec4& color)
 
     // set the color in the backgroun geometry
     di().lock();
+#if      OSG_MIN_VERSION_REQUIRED(3,2,0)
     m_hudBackgroundGeometry->setColorArray(hudcolors, osg::Array::Binding::BIND_PER_VERTEX);
+#else    // OSG_MIN_VERSION_REQUIRED(3,2,0)
+    m_hudBackgroundGeometry->setColorArray(hudcolors);
+    m_hudBackgroundGeometry->setColorBinding(osg::Geometry::BIND_PER_VERTEX);
+#endif   // OSG_MIN_VERSION_REQUIRED(3,2,0)
     di().unlock();
 };
 
@@ -239,7 +245,12 @@ void HeadsUpDisplay::setDefaultBackgrounColor()
 
     // set the color in the backgroun geometry
     di().lock();
+#if      OSG_MIN_VERSION_REQUIRED(3,2,0)
     m_hudBackgroundGeometry->setColorArray(hudcolors, osg::Array::Binding::BIND_PER_VERTEX);
+#else    // OSG_MIN_VERSION_REQUIRED(3,2,0)
+    m_hudBackgroundGeometry->setColorArray(hudcolors);
+    m_hudBackgroundGeometry->setColorBinding(osg::Geometry::BIND_PER_VERTEX);
+#endif   // OSG_MIN_VERSION_REQUIRED(3,2,0)
     di().unlock();
 };
 

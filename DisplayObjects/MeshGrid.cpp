@@ -13,6 +13,7 @@
 #include <osg/Geometry>
 #include <osg/Geode>
 #include <osg/PolygonMode>
+#include <osg/Version>
 
 namespace d3
 {
@@ -45,9 +46,13 @@ osg::ref_ptr<osg::Node> get(const MeshGrid& meshGrid)
     osg::ref_ptr<osg::Geometry> polygon( new osg::Geometry() );
     polygon->setVertexArray( vertices.get() );
     polygon->setNormalArray( normals.get() );
+#if      OSG_MIN_VERSION_REQUIRED(3,2,0)
     polygon->setColorArray( colors.get(), osg::Array::Binding::BIND_PER_VERTEX );
+#else    // OSG_MIN_VERSION_REQUIRED(3,2,0)
+    polygon->setColorArray(colors.get());
+    polygon->setColorBinding(osg::Geometry::BIND_PER_VERTEX);
+#endif   // OSG_MIN_VERSION_REQUIRED(3,2,0)
     polygon->setNormalBinding( osg::Geometry::BIND_OVERALL );
-    //polygon->setColorBinding( osg::Geometry::BIND_PER_VERTEX );
     if ( not meshGrid.fill )
     {
         polygon->getOrCreateStateSet()->

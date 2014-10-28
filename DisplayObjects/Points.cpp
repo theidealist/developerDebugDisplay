@@ -14,6 +14,7 @@
 #include <osg/Geometry>
 #include <osg/Point>
 #include <osg/Geode>
+#include <osg/Version>
 
 namespace d3
 {
@@ -25,11 +26,11 @@ osg::ref_ptr<osg::Node> get(const PointVec_t& points,
 {
     // the color array
     osg::ref_ptr<osg::Vec4Array> osgColors( new osg::Vec4Array() );
-    osgColors->reserveArray(points.size());
+    osgColors->reserve(points.size());
 
     // the vertex array
     osg::ref_ptr<osg::Vec3Array> verts( new osg::Vec3Array() );
-    verts->reserveArray(points.size());
+    verts->reserve(points.size());
 
     // the actual cloud indices
     osg::ref_ptr<osg::DrawElementsUInt>
@@ -49,8 +50,12 @@ osg::ref_ptr<osg::Node> get(const PointVec_t& points,
     // now add all this stuff to the geometry object
     osg::ref_ptr<osg::Geometry> cloudGeometry( new osg::Geometry() );
     cloudGeometry->setVertexArray(verts);
+#if      OSG_MIN_VERSION_REQUIRED(3,2,0)
     cloudGeometry->setColorArray(osgColors, osg::Array::Binding::BIND_PER_VERTEX);
-    //cloudGeometry->setColorBinding(osg::Geometry::BIND_PER_VERTEX);
+#else    // OSG_MIN_VERSION_REQUIRED(3,2,0)
+    cloudGeometry->setColorArray(osgColors);
+    cloudGeometry->setColorBinding(osg::Geometry::BIND_PER_VERTEX);
+#endif   // OSG_MIN_VERSION_REQUIRED(3,2,0)
     cloudGeometry->addPrimitiveSet(theCloud);
 
     // set the state - point size and lighting

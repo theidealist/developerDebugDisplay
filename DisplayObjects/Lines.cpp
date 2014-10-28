@@ -12,6 +12,7 @@
 #include "Lines.h"
 
 #include <osg/Geometry>
+#include <osg/Version>
 
 namespace d3
 {
@@ -52,7 +53,12 @@ osg::ref_ptr<osg::Node> get(const LineVec_t& lines)
     // now add all this stuff to the geometry object
     osg::ref_ptr<osg::Geometry> cloudGeometry( new osg::Geometry() );
     cloudGeometry->setVertexArray(verts);
+#if      OSG_MIN_VERSION_REQUIRED(3,2,0)
     cloudGeometry->setColorArray(osgColors, osg::Array::Binding::BIND_PER_VERTEX);
+#else    // OSG_MIN_VERSION_REQUIRED(3,2,0)
+    cloudGeometry->setColorArray(osgColors);
+    cloudGeometry->setColorBinding(osg::Geometry::BIND_PER_VERTEX);
+#endif   // OSG_MIN_VERSION_REQUIRED(3,2,0)
     cloudGeometry->addPrimitiveSet(theLines);
 
     // set the state - line size and lighting
