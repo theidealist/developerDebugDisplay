@@ -81,8 +81,9 @@ class QOSGWidget : public QGLWidget
     };
 
     /// @brief   Add a handler for a specific key
-    /// @brief   func The function to handle the key
-    /// @brief   description The description for this key
+    /// @param   key The key to handle
+    /// @param   func The function to handle the key
+    /// @param   description The description for this key
     inline bool addKeyHandler(const osgGA::GUIEventAdapter::KeySymbol& key,
                               const std::function<bool()>& func,
                               const std::string& description)
@@ -90,6 +91,10 @@ class QOSGWidget : public QGLWidget
         return m_pKeypressEventHandler->add(key, func, description);
     };
 
+    /// @brief   Add a handler function for a click event
+    /// @param   button The button to handle
+    /// @param   func The function to call
+    /// @param   description The description of the handler
     inline bool addClickHandler(const osgGA::GUIEventAdapter::MouseButtonMask& button,
                                 const std::function<bool(const osgGA::GUIEventAdapter&)>& func,
                                 const std::string& description)
@@ -127,6 +132,7 @@ class QOSGWidget : public QGLWidget
     virtual void keyReleaseEvent( QKeyEvent* theEvent );
     virtual void wheelEvent( QWheelEvent* theEvent );
 
+    ///
     inline virtual void resizeGL( int ww, int hh )
     {
         m_pEventQueue->windowResize(0, 0, ww, hh );
