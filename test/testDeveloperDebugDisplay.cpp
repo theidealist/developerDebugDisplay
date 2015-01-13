@@ -95,6 +95,26 @@ int main(int argc, char* argv[])
                    },
                    "Typing \'k\' is cool" );
 
+    d3::di().add( osgGA::GUIEventAdapter::LEFT_MOUSE_BUTTON,
+                  [&](const osgGA::GUIEventAdapter& event)->bool
+                  {
+                      //std::cout << "event type: " << event.getEventType() << std::endl;
+                      if ( osgGA::GUIEventAdapter::RELEASE != event.getEventType() )
+                          return false;
+
+                      if ( osgGA::GUIEventAdapter::MODKEY_SHIFT & event.getModKeyMask() )
+                          std::cout << "shift is down" << std::endl;
+
+                      if ( osgGA::GUIEventAdapter::MODKEY_CTRL & event.getModKeyMask() )
+                          std::cout << "ctrl is down" << std::endl;
+
+                      //std::cout << "mod mask: " << event.getModKeyMask() << std::endl;
+                      if ( osgGA::GUIEventAdapter::DOUBLECLICK == event.getEventType() )
+                          std::cout << "double" << std::endl;
+                      return false;
+                  },
+                  "Right Click Test" );
+
     bool replace(true);
     d3::di().add( "par::not::appender", d3::get(d3::Point{osg::Vec3d(1,0,0), d3::white()}), replace);
     d3::di().add( "par::not::appender", d3::get(d3::Point{osg::Vec3d(2,0,0), d3::white()}), replace);

@@ -165,6 +165,10 @@ class DisplayInterface
              const std::function<bool()>& func,
              const std::string& description = "NONE");
 
+    bool add(const osgGA::GUIEventAdapter::MouseButtonMask& button,
+             const std::function<bool(const osgGA::GUIEventAdapter&)>& func,
+             const std::string& description = "NONE");
+
     /// @brief   Track a node with the camera
     /// @param   node The node to track
     /// @param   eye The position of the eye in the node's frame

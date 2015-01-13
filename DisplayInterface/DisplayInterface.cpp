@@ -104,6 +104,27 @@ bool DisplayInterface::add(const char& key,
 
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
+bool DisplayInterface::add(const osgGA::GUIEventAdapter::MouseButtonMask& button,
+                           const std::function<bool(const osgGA::GUIEventAdapter&)>& func,
+                           const std::string& description /* = "NONE" */)
+{
+    m_haveData = true;
+
+    if ( not setupMainWindow() )
+    {
+        std::cerr << "BUMMER: No main window for you" << std::endl;
+        m_haveData = false;
+        return false;
+    }
+
+    // get the lock so we can add stuff
+    std::lock_guard<std::mutex> l_lock(m_mutex);
+
+    return m_pOsgWidget->addClickHandler(button, func, description);
+};
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
 bool DisplayInterface::track(const osg::ref_ptr<osg::Node>& node,
                              const osg::Vec3d eye /* = osg::Vec3d{20.0, 20.0, 40.0} */,
                              const osg::Vec3d center /* = osg::Vec3d{0.0, 0.0, 0.0} */,
