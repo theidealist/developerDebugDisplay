@@ -195,7 +195,13 @@ void QOSGWidget::mouseMoveEvent(QMouseEvent* qEvent)
 /////////////////////////////////////////////////////////////////
 void QOSGWidget::mouseDoubleClickEvent( QMouseEvent* qEvent )
 {
-    std::cout << "double click" << std::endl;
+    switch ( qEvent->button() )
+    {
+    case Qt::LeftButton:  m_pEventQueue->mouseDoubleButtonPress(qEvent->x(), qEvent->y(), 1); break;
+    case Qt::MidButton:   m_pEventQueue->mouseDoubleButtonPress(qEvent->x(), qEvent->y(), 2); break;
+    case Qt::RightButton: m_pEventQueue->mouseDoubleButtonPress(qEvent->x(), qEvent->y(), 3); break;
+    default:;
+    }
 };
 
 /////////////////////////////////////////////////////////////////
