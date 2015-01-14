@@ -12,6 +12,7 @@
 
 #include "ScreenshotCallback.h"
 #include "KeypressEventHandler.h"
+#include "ClickEventHandler.h"
 
 #include <QtCore/QTimer>
 #include <QtGui/QKeyEvent>
@@ -80,13 +81,25 @@ class QOSGWidget : public QGLWidget
     };
 
     /// @brief   Add a handler for a specific key
-    /// @brief   func The function to handle the key
-    /// @brief   description The description for this key
+    /// @param   key The key to handle
+    /// @param   func The function to handle the key
+    /// @param   description The description for this key
     inline bool addKeyHandler(const osgGA::GUIEventAdapter::KeySymbol& key,
                               const std::function<bool()>& func,
                               const std::string& description)
     {
         return m_pKeypressEventHandler->add(key, func, description);
+    };
+
+    /// @brief   Add a handler function for a click event
+    /// @param   button The button to handle
+    /// @param   func The function to call
+    /// @param   description The description of the handler
+    inline bool addClickHandler(const osgGA::GUIEventAdapter::MouseButtonMask& button,
+                                const std::function<bool(const osgGA::GUIEventAdapter&)>& func,
+                                const std::string& description)
+    {
+        return m_pClickEventHandler->add(button, func, description);
     };
 
     /// @brief   Get at the screenshot callback
@@ -111,23 +124,21 @@ class QOSGWidget : public QGLWidget
 
     /// @{
     /// @name    Handle all the window interfaces and pass them along to osg
-    inline virtual void mousePressEvent( QMouseEvent* theEvent )   { post(theEvent); };
-    inline virtual void mouseReleaseEvent( QMouseEvent* theEvent ) { post(theEvent); };
-    inline virtual void mouseMoveEvent( QMouseEvent* theEvent )    { post(theEvent); };
-    inline virtual void keyPressEvent( QKeyEvent* theEvent )   { m_pEventQueue->keyPress( toOsg(theEvent) ); };
-    inline virtual void keyReleaseEvent( QKeyEvent* theEvent ) { m_pEventQueue->keyRelease( toOsg(theEvent) ); };
-    inline virtual void wheelEvent( QWheelEvent* theEvent )    { m_pEventQueue->mouseScroll(theEvent->delta() < 0 ?
-                                                                                            osgGA::GUIEventAdapter::SCROLL_UP :
-                                                                                            osgGA::GUIEventAdapter::SCROLL_DOWN); };
+    virtual void mousePressEvent( QMouseEvent* qEvent );
+    virtual void mouseReleaseEvent( QMouseEvent* qEvent );
+    virtual void mouseMoveEvent( QMouseEvent* qEvent );
+    virtual void mouseDoubleClickEvent( QMouseEvent* qEvent );
+    virtual void keyPressEvent( QKeyEvent* theEvent );
+    virtual void keyReleaseEvent( QKeyEvent* theEvent );
+    virtual void wheelEvent( QWheelEvent* theEvent );
+
+    ///
     inline virtual void resizeGL( int ww, int hh )
     {
         m_pEventQueue->windowResize(0, 0, ww, hh );
         m_pGraphicsWindow->resized(0, 0, ww, hh);
     };
     /// @}
-
-    /// @brief   Translate the mouse events to the osg window
-    void post(QMouseEvent *event);
 
     /// @brief   Get the osg key symbol
     osgGA::GUIEventAdapter::KeySymbol toOsg(QKeyEvent *event);
@@ -149,6 +160,9 @@ class QOSGWidget : public QGLWidget
 
     /// So we can handle keypress events
     osg::ref_ptr<KeypressEventHandler>                                  m_pKeypressEventHandler;
+
+    /// So we can process click events
+    osg::ref_ptr<ClickEventHandler>                                     m_pClickEventHandler;
 
     /// The map of the names to clear colors
     osg::Vec4                                                           m_currentClearColor;

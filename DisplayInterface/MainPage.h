@@ -16,10 +16,10 @@
 ///
 /// - This is \b not a testing suite
 ///
-/// - This is \not an application developer tool where you build functionality
+/// - This is \b not an application developer tool where you build functionality
 /// and end-user enterprise applications using a wysiwyg layout editor
 ///
-/// - This is \not going to meet everyone's needs in all situations and is \b
+/// - This is \b not going to meet everyone's needs in all situations and is \b
 /// not intended to be perfectly efficient in every possible way
 ///
 /// What then \b is this tool and why should you care? If you are a developer
@@ -119,7 +119,7 @@
 ///     // draw the point
 ///     d3::di().add( "point",
 ///                   d3::get(d3::Point{{point.x, point.y, point.z},
-///                                     {0.0, 1.0, 0.0, 1.0}}) );
+///                                    {0.0, 1.0, 0.0, 1.0}}) );
 ///
 ///     // ... do other stuff to find the closest point ...
 /// }

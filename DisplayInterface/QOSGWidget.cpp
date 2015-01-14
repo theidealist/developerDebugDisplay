@@ -33,6 +33,7 @@ QOSGWidget::QOSGWidget() :
     m_nodeTrackerManipulator(new osgGA::NodeTrackerManipulator),
 
     m_pKeypressEventHandler(new KeypressEventHandler()),
+    m_pClickEventHandler(new ClickEventHandler()),
 
     m_currentClearColor(),
 
@@ -95,6 +96,7 @@ void QOSGWidget::initialize()
 
     // add the key press event handler
     m_pOsgViewer->getEventHandlers().push_front(m_pKeypressEventHandler);
+    m_pOsgViewer->getEventHandlers().push_front(m_pClickEventHandler);
 
     // done with init, so unlock things
     unlock();
@@ -156,29 +158,73 @@ void QOSGWidget::updateGL()
 //////// PRIVATES //////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-void QOSGWidget::post(QMouseEvent *qEvent)
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+void QOSGWidget::mousePressEvent(QMouseEvent* qEvent)
 {
-    // get the button from the event
-    int button(0);
     switch ( qEvent->button() )
     {
-    case(Qt::LeftButton):  button = osgGA::GUIEventAdapter::LEFT_MOUSE_BUTTON;   break;
-    case(Qt::MidButton):   button = osgGA::GUIEventAdapter::MIDDLE_MOUSE_BUTTON; break;
-    case(Qt::RightButton): button = 3;                                           break;
-    case(Qt::NoButton):    // fall through
+    case Qt::LeftButton:  m_pEventQueue->mouseButtonPress(qEvent->x(), qEvent->y(), 1); break;
+    case Qt::MidButton:   m_pEventQueue->mouseButtonPress(qEvent->x(), qEvent->y(), 2); break;
+    case Qt::RightButton: m_pEventQueue->mouseButtonPress(qEvent->x(), qEvent->y(), 3); break;
     default:;
     }
+};
 
-    // convert the qEvent type and signal an event
-    switch(qEvent->type())
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+void QOSGWidget::mouseReleaseEvent(QMouseEvent* qEvent)
+{
+    switch ( qEvent->button() )
     {
-    case QEvent::MouseButtonPress:   m_pEventQueue->mouseButtonPress(qEvent->x(), qEvent->y(), button);   break;
-    case QEvent::MouseButtonRelease: m_pEventQueue->mouseButtonRelease(qEvent->x(), qEvent->y(), button); break;
-    case QEvent::MouseMove:          m_pEventQueue->mouseMotion(qEvent->x(), qEvent->y());                break;
+    case Qt::LeftButton:  m_pEventQueue->mouseButtonRelease(qEvent->x(), qEvent->y(), 1); break;
+    case Qt::MidButton:   m_pEventQueue->mouseButtonRelease(qEvent->x(), qEvent->y(), 2); break;
+    case Qt::RightButton: m_pEventQueue->mouseButtonRelease(qEvent->x(), qEvent->y(), 3); break;
     default:;
     }
+};
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+void QOSGWidget::mouseMoveEvent(QMouseEvent* qEvent)
+{
+     m_pEventQueue->mouseMotion(qEvent->x(), qEvent->y());
+};
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+void QOSGWidget::mouseDoubleClickEvent( QMouseEvent* qEvent )
+{
+    switch ( qEvent->button() )
+    {
+    case Qt::LeftButton:  m_pEventQueue->mouseDoubleButtonPress(qEvent->x(), qEvent->y(), 1); break;
+    case Qt::MidButton:   m_pEventQueue->mouseDoubleButtonPress(qEvent->x(), qEvent->y(), 2); break;
+    case Qt::RightButton: m_pEventQueue->mouseDoubleButtonPress(qEvent->x(), qEvent->y(), 3); break;
+    default:;
+    }
+};
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+void QOSGWidget::keyPressEvent( QKeyEvent* theEvent )
+{
+    m_pEventQueue->keyPress( toOsg(theEvent) );
+};
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+void QOSGWidget::keyReleaseEvent( QKeyEvent* theEvent )
+{
+    m_pEventQueue->keyRelease( toOsg(theEvent) );
+};
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+void QOSGWidget::wheelEvent( QWheelEvent* theEvent )
+{
+    m_pEventQueue->mouseScroll(theEvent->delta() < 0 ?
+                               osgGA::GUIEventAdapter::SCROLL_UP :
+                               osgGA::GUIEventAdapter::SCROLL_DOWN);
 };
 
 /////////////////////////////////////////////////////////////////
@@ -188,10 +234,13 @@ osgGA::GUIEventAdapter::KeySymbol QOSGWidget::toOsg(QKeyEvent *theEvent)
     // @todo: might need to add more of these for non-alphanumeric keys...
     switch ( theEvent->key() )
     {
-    case Qt::Key_Left:  return osgGA::GUIEventAdapter::KEY_Left;
-    case Qt::Key_Right: return osgGA::GUIEventAdapter::KEY_Right;
-    case Qt::Key_Up:    return osgGA::GUIEventAdapter::KEY_Up;
-    case Qt::Key_Down:  return osgGA::GUIEventAdapter::KEY_Down;
+    case Qt::Key_Left:    return osgGA::GUIEventAdapter::KEY_Left;
+    case Qt::Key_Right:   return osgGA::GUIEventAdapter::KEY_Right;
+    case Qt::Key_Up:      return osgGA::GUIEventAdapter::KEY_Up;
+    case Qt::Key_Down:    return osgGA::GUIEventAdapter::KEY_Down;
+    case Qt::Key_Shift:   return osgGA::GUIEventAdapter::KEY_Shift_L;
+    case Qt::Key_Control: return osgGA::GUIEventAdapter::KEY_Control_L;
+    case Qt::Key_Meta:    return osgGA::GUIEventAdapter::KEY_Meta_L;
     default: return (osgGA::GUIEventAdapter::KeySymbol) *(theEvent->text().toAscii().data() );
     }
 };
