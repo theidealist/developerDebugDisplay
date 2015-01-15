@@ -73,6 +73,9 @@ class QOSGWidget : public QGLWidget
     /// @brief   Get the root osg node
     osg::ref_ptr<osg::Group> getRootGroup() const { return m_pRoot; };
 
+    /// @brief   Provide access to the underlying camera
+    osg::ref_ptr<osg::Camera> getCamera() const { return m_pOsgViewer->getCamera(); };
+
     /// @brief   Allow to set the root group
     inline void setRootGroup(osg::ref_ptr<osg::Group> group)
     {
