@@ -19,7 +19,7 @@ Description: 3D algorithm visualization utility (development files)
 
 Package: developer-debug-display
 Section: libs
-Architecture: amd64, i386
+Architecture: amd64 i386
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: 3D algorithm visualization utility (runtime files)
  A simple 3D display based on QT and OpenSceneGraph aimed specifically 
