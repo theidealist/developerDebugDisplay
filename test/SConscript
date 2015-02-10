@@ -19,6 +19,8 @@ env.InstallTest(
         LIBS = [
             'DDDisplayInterface',
             'DDDisplayObjects',
+            'opencv_core',
+            'opencv_highgui',
             ],
         )
     )

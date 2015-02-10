@@ -10,7 +10,7 @@
 
 Import( 'env' )
 
-env.InstallTest(
+env.InstallApp(
     env.Program(
         target = 'dsp',
         source = [
