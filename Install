@@ -3,10 +3,7 @@
 We depend on qt and osg (and on a couple of boost modules for the test apps):
 > sudo apt-get install qt4-dev-tools libopenscenegraph-dev libboost-program-options-dev libboost-filesystem-dev
 
-To build the main test app we also require opencv to load an image (you might want to just get opencv-dev)
-> sudo apt-get install libopencv-core-dev libopencv-highgui-dev
-
-Once those are installed, just run
+Once those are installed, build the lib and apps by running
 > scons -j<numProcessors> libs
 > scons -j<numProcessors> apps
 

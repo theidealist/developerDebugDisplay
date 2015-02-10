@@ -27,10 +27,7 @@
 
 /// Fancier drawing stuff
 #include <osg/MatrixTransform>
-
-/// opencv stuff
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
+#include <osgDB/ReadFile>
 
 /// std stuff
 #include <chrono>
@@ -43,27 +40,13 @@ int main(int argc, char* argv[])
     // the scope here is to make sure that the image given to the display is
     // held by the display even when this one goes out of scope
     {
-        cv::Mat img;
-        cv::cvtColor(cv::imread("logo.png"), img, CV_BGR2RGB);
-        int imgSize(img.rows*img.cols*img.channels());
-        uchar* image( (uchar*)malloc(imgSize) );
-        memcpy(image, img.ptr(), imgSize);
-
-        osg::ref_ptr<osg::Image> osgImage(new osg::Image());
-        osgImage->setImage(img.cols,
-                           img.rows,
-                           img.channels(),
-                           GL_RGB,
-                           GL_RGB,
-                           GL_UNSIGNED_BYTE,
-                           image,
-                           osg::Image::AllocationMode::USE_MALLOC_FREE,
-                           1);
-
-        osg::Matrix pp(osg::Matrix::translate(3,2,1) * osg::Matrix::rotate(1.0, osg::Vec3{1,0.2,0.1}));
-
-        d3::di().add( "image::frame", d3::get(d3::Image{pp, osgImage, 600.0, 600.0, 5.0}) );
-        d3::di().add( "image::camera", d3::get(d3::Triad{pp}) );
+        osg::ref_ptr<osg::Image> img(osgDB::readImageFile("logo.png"));
+        if ( img )
+        {
+            osg::Matrix pp(osg::Matrix::translate(3,2,1) * osg::Matrix::rotate(1.0, osg::Vec3{1,0.2,0.1}));
+            d3::di().add( "image::frame", d3::get(d3::Image{pp, img, 600.0, 600.0, 5.0}) );
+            d3::di().add( "image::camera", d3::get(d3::Triad{pp}) );
+        }
     }
 
     d3::di().add( "ground", d3::ground() );
