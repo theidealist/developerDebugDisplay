@@ -60,8 +60,10 @@ int main(int argc, char* argv[])
                            osg::Image::AllocationMode::USE_MALLOC_FREE,
                            1);
 
-        osg::Matrix pp(osg::Matrix::identity());
-        d3::di().add( "image", d3::get(d3::Image{pp, osgImage, 600.0, 600.0, 5.0}) );
+        osg::Matrix pp(osg::Matrix::translate(3,2,1) * osg::Matrix::rotate(1.0, osg::Vec3{1,0.2,0.1}));
+
+        d3::di().add( "image::frame", d3::get(d3::Image{pp, osgImage, 600.0, 600.0, 5.0}) );
+        d3::di().add( "image::camera", d3::get(d3::Triad{pp}) );
     }
 
     d3::di().add( "ground", d3::ground() );
