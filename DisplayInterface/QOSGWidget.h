@@ -105,6 +105,8 @@ class QOSGWidget : public QGLWidget
         return m_pClickEventHandler->add(button, func, description);
     };
 
+    inline osg::ref_ptr<osgGA::StandardManipulator> getManipulator() { return m_trackballManipulator; };
+
     /// @brief   Get at the screenshot callback
     inline osg::ref_ptr<ScreenshotCallback>& getScreenshotCallback() { return m_pScreenshotCallback; };
 
