@@ -105,6 +105,11 @@ class QOSGWidget : public QGLWidget
         return m_pClickEventHandler->add(button, func, description);
     };
 
+    /// @brief   non-const access to the manipulator (for now, just the
+    ///          trackball one) for settin things like the eye, center, or up-vector
+    /// @todo    Make the manipulator a generic StandardManipulator and point it
+    ///          to the trackball or tracker or ... whatever, then just return
+    ///          that one here.
     inline osg::ref_ptr<osgGA::StandardManipulator> getManipulator() { return m_trackballManipulator; };
 
     /// @brief   Get at the screenshot callback
