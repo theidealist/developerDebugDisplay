@@ -13,8 +13,12 @@
 #include <osgViewer/ViewerEventHandlers>
 #include <osg/Point>
 #include <osgDB/ReadFile>
-#include <osgGA/TerrainManipulator>
+
 #include <osgGA/TrackballManipulator>
+#include <osgGA/SphericalManipulator>
+#include <osgGA/NodeTrackerManipulator>
+#include <osgGA/TerrainManipulator>
+
 #include <QtGui/QActionGroup>
 #include <QtGui/QtGui>
 
@@ -29,8 +33,8 @@ QOSGWidget::QOSGWidget() :
     m_pEventQueue(m_pGraphicsWindow->getEventQueue()),
     m_pOsgViewer(new osgViewer::Viewer()),
 
-    m_trackballManipulator(new osgGA::TrackballManipulator),
-    m_nodeTrackerManipulator(new osgGA::NodeTrackerManipulator),
+    m_availableManipulators(),
+    m_currentManipulator(),
 
     m_pKeypressEventHandler(new KeypressEventHandler()),
     m_pClickEventHandler(new ClickEventHandler()),
@@ -49,6 +53,13 @@ QOSGWidget::QOSGWidget() :
     // set mouse tracking so we can get continuous updates of the mouse events
     // (i.e. moves) even if we don't use them right now
     setMouseTracking(true);
+
+    // init the set of available manipulators
+    m_availableManipulators[SupportedManipulator::TRACKBALL] = new osgGA::TrackballManipulator();
+    m_availableManipulators[SupportedManipulator::SPHERICAL] = new osgGA::SphericalManipulator();
+    m_availableManipulators[SupportedManipulator::NODE_TRACKER] = new osgGA::NodeTrackerManipulator();
+    m_availableManipulators[SupportedManipulator::TERRAIN] = new osgGA::TerrainManipulator();
+    m_availableManipulators[SupportedManipulator::CUSTOM] = new osgGA::TrackballManipulator();
 };
 
 /////////////////////////////////////////////////////////////////
@@ -73,17 +84,49 @@ void QOSGWidget::initialize()
     // here is a simple camera
     m_pOsgViewer->getCamera()->setViewport(new osg::Viewport(0,0,width(),height()));
     m_pOsgViewer->getCamera()->setGraphicsContext(m_pGraphicsWindow);
-
+    
     // The trackball is the best!
-    m_trackballManipulator->setHomePosition(osg::Vec3d(20,20,40),
-                                            osg::Vec3d(0,0,0),
-                                            osg::Vec3d(0,0,1));
-    m_trackballManipulator->setWheelZoomFactor(-2.0 * m_trackballManipulator->getWheelZoomFactor());
-    m_trackballManipulator->setMinimumDistance(0.01);
-    m_trackballManipulator->setTrackballSize(0.75);
-    m_trackballManipulator->setAllowThrow(true);
-    m_pOsgViewer->setCameraManipulator(m_trackballManipulator);
+    osg::ref_ptr<osgGA::TrackballManipulator>
+        trackballManipulator(dynamic_cast<osgGA::TrackballManipulator*>
+                             (m_availableManipulators[SupportedManipulator::TRACKBALL].get()));
+    if ( trackballManipulator )
+    {
+        trackballManipulator->setHomePosition(osg::Vec3d(20,20,40),
+                                              osg::Vec3d(0,0,0),
+                                              osg::Vec3d(0,0,1));
+        trackballManipulator->setWheelZoomFactor(-2.0 * trackballManipulator->getWheelZoomFactor());
+        trackballManipulator->setMinimumDistance(0.01);
+        trackballManipulator->setTrackballSize(0.75);
+        trackballManipulator->setAllowThrow(true);
+    }
 
+    // we also want to support spherical
+    osg::ref_ptr<osgGA::SphericalManipulator>
+        sphericalManipulator(dynamic_cast<osgGA::SphericalManipulator*>
+                             (m_availableManipulators[SupportedManipulator::SPHERICAL].get()));
+    if ( sphericalManipulator )
+    {
+        sphericalManipulator->setHomePosition(osg::Vec3d(20,20,40),
+                                              osg::Vec3d(0,0,0),
+                                              osg::Vec3d(0,0,1));
+        sphericalManipulator->setRotationMode(osgGA::SphericalManipulator::RotationMode::MAP);
+        sphericalManipulator->home(1.0);
+        sphericalManipulator->setAllowThrow(true);
+    }
+
+    // what about terrain mode
+    osg::ref_ptr<osgGA::TerrainManipulator>
+        terrainManipulator(dynamic_cast<osgGA::TerrainManipulator*>
+                           (m_availableManipulators[SupportedManipulator::TERRAIN].get()));
+    if ( terrainManipulator )
+    {
+        terrainManipulator->setRotationMode(osgGA::TerrainManipulator::RotationMode::ELEVATION_AZIM);
+        terrainManipulator->setAllowThrow(true);
+    }
+
+    // set the current manipulator
+    setManipulator(SupportedManipulator::TRACKBALL);
+    
     // Set the default clear color
     setClearColor();
 
@@ -104,12 +147,21 @@ void QOSGWidget::initialize()
 
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
-void QOSGWidget::setEnableTracking(bool enable)
+void QOSGWidget::setManipulator(const SupportedManipulator& manipSelection)
 {
     lock();
-    if ( enable ) m_pOsgViewer->setCameraManipulator(m_nodeTrackerManipulator);
-    else          m_pOsgViewer->setCameraManipulator(m_trackballManipulator);
+    m_currentManipulator = m_availableManipulators[manipSelection];
+    m_pOsgViewer->setCameraManipulator(m_availableManipulators[manipSelection]);
     unlock();
+};
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+void QOSGWidget::setManipulator(const SupportedManipulator& manipSelection,
+                                const osg::ref_ptr<osgGA::CameraManipulator> manipulator)
+{
+    m_availableManipulators[SupportedManipulator::CUSTOM] = manipulator;
+    setManipulator(SupportedManipulator::CUSTOM);
 };
 
 /////////////////////////////////////////////////////////////////
@@ -132,13 +184,19 @@ void QOSGWidget::trackNode(const osg::ref_ptr<osg::Node>& node,
                            const osg::Vec3d center,
                            const osg::Vec3d up)
 {
-    m_nodeTrackerManipulator->setTrackerMode(osgGA::NodeTrackerManipulator::NODE_CENTER_AND_ROTATION);
-    m_nodeTrackerManipulator->setRotationMode(osgGA::NodeTrackerManipulator::TRACKBALL);
-    m_nodeTrackerManipulator->setHomePosition({ 0.0, 0.0,100.0},
-                                              { 0.0, 0.0,  0.0},
-                                              { 0.0, 1.0,  0.0});
-    m_nodeTrackerManipulator->setTrackNode(node);
-    setEnableTracking(true);
+    osg::ref_ptr<osgGA::NodeTrackerManipulator>
+        nodeTracker(dynamic_cast<osgGA::NodeTrackerManipulator*>
+                    (m_availableManipulators[SupportedManipulator::NODE_TRACKER].get()));
+    if ( nodeTracker )
+    {
+        nodeTracker->setTrackerMode(osgGA::NodeTrackerManipulator::NODE_CENTER_AND_ROTATION);
+        nodeTracker->setRotationMode(osgGA::NodeTrackerManipulator::TRACKBALL);
+        nodeTracker->setHomePosition({ 0.0, 0.0,100.0},
+                                     { 0.0, 0.0,  0.0},
+                                     { 0.0, 1.0,  0.0});
+        nodeTracker->setTrackNode(node);
+        setManipulator(SupportedManipulator::NODE_TRACKER);
+    }
 };
 
 /////////////////////////////////////////////////////////////////

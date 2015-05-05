@@ -190,20 +190,20 @@ void MainWindow::setFullScreen(bool fullscreen)
 
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
-void MainWindow::enableNodeTracking(bool enable)
-{
-    if ( isVisible() )
-    {
-        if ( nullptr != m_pOsgWidget )
-        {
-            static bool shouldEnable(true);
-            shouldEnable = not shouldEnable;
-            m_pOsgWidget->lock();
-            m_pOsgWidget->setEnableTracking(shouldEnable);
-            m_pOsgWidget->unlock();
-        }
-    }
-};
+// void MainWindow::enableNodeTracking(bool enable)
+// {
+//     if ( isVisible() )
+//     {
+//         if ( nullptr != m_pOsgWidget )
+//         {
+//             static bool shouldEnable(true);
+//             shouldEnable = not shouldEnable;
+//             m_pOsgWidget->lock();
+//             m_pOsgWidget->setEnableTracking(shouldEnable);
+//             m_pOsgWidget->unlock();
+//         }
+//     }
+// };
 
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
