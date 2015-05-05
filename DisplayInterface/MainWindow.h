@@ -56,7 +56,7 @@ class MainWindow : public QMainWindow
     void setFullScreen(bool fullscreen);
 
     /// @brief   Method to control tracking
-    void enableNodeTracking(bool enable);
+//     void enableNodeTracking(bool enable);
 
     /// @brief   Method to grab a screen capture
     void grabSnapshot(bool);
