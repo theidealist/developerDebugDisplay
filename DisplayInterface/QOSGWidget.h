@@ -19,8 +19,7 @@
 #include <QtGui/QMouseEvent>
 #include <QtOpenGL/QGLWidget>
 
-#include <osgGA/TrackballManipulator>
-#include <osgGA/NodeTrackerManipulator>
+#include <osgGA/CameraManipulator>
 
 #include <osgViewer/Viewer>
 #include <osg/Group>
@@ -42,6 +41,15 @@ class QOSGWidget : public QGLWidget
 
   public:
 
+    enum class SupportedManipulator
+    {
+        TRACKBALL = 0,
+        SPHERICAL,
+        NODE_TRACKER,
+        TERRAIN,
+        CUSTOM
+    };
+
     /// @brief   Constructor
     QOSGWidget();
 
@@ -52,8 +60,12 @@ class QOSGWidget : public QGLWidget
     void initialize();
 
     /// @brief   Method to control the enablement of tracking a node
-    void setEnableTracking(bool enable);
+    void setManipulator(const SupportedManipulator& manipSelection);
 
+    /// @brief   Method to set a custom manipulator
+    void setManipulator(const SupportedManipulator& manipSelection,
+                        const osg::ref_ptr<osgGA::CameraManipulator> manipulator);
+    
     /// @brief   Set the clear color
     void setClearColor(const osg::Vec4& color = osg::Vec4(0.1, 0.1, 0.1, 1.0));
 
@@ -105,12 +117,8 @@ class QOSGWidget : public QGLWidget
         return m_pClickEventHandler->add(button, func, description);
     };
 
-    /// @brief   non-const access to the manipulator (for now, just the
-    ///          trackball one) for settin things like the eye, center, or up-vector
-    /// @todo    Make the manipulator a generic StandardManipulator and point it
-    ///          to the trackball or tracker or ... whatever, then just return
-    ///          that one here.
-    inline osg::ref_ptr<osgGA::StandardManipulator> getManipulator() { return m_trackballManipulator; };
+    /// @brief   non-const access to the manipulator
+    inline osg::ref_ptr<osgGA::CameraManipulator> getManipulator() { return m_currentManipulator; };
 
     /// @brief   Get at the screenshot callback
     inline osg::ref_ptr<ScreenshotCallback>& getScreenshotCallback() { return m_pScreenshotCallback; };
@@ -162,11 +170,10 @@ class QOSGWidget : public QGLWidget
     /// The osg viewer
     osg::ref_ptr<osgViewer::Viewer>                                     m_pOsgViewer;
 
-    /// The manipulator
-    osg::ref_ptr<osgGA::TrackballManipulator>                           m_trackballManipulator;
-
-    /// A node-tracker manipulator
-    osg::ref_ptr<osgGA::NodeTrackerManipulator>                         m_nodeTrackerManipulator;
+    std::map<SupportedManipulator, osg::ref_ptr<osgGA::CameraManipulator>> m_availableManipulators;
+        
+    /// The current manipulator
+    osg::ref_ptr<osgGA::CameraManipulator>                              m_currentManipulator;
 
     /// So we can handle keypress events
     osg::ref_ptr<KeypressEventHandler>                                  m_pKeypressEventHandler;
