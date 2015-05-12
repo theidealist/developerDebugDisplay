@@ -267,14 +267,20 @@ void QOSGWidget::mouseDoubleClickEvent( QMouseEvent* qEvent )
 /////////////////////////////////////////////////////////////////
 void QOSGWidget::keyPressEvent( QKeyEvent* theEvent )
 {
-    m_pEventQueue->keyPress( toOsg(theEvent) );
+    if ( not theEvent->isAutoRepeat() )
+    {
+        m_pEventQueue->keyPress( toOsg(theEvent) );
+    }
 };
 
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 void QOSGWidget::keyReleaseEvent( QKeyEvent* theEvent )
 {
-    m_pEventQueue->keyRelease( toOsg(theEvent) );
+    if ( not theEvent->isAutoRepeat() )
+    {
+        m_pEventQueue->keyRelease( toOsg(theEvent) );
+    }
 };
 
 /////////////////////////////////////////////////////////////////
