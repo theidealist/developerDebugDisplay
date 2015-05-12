@@ -206,6 +206,7 @@ void QOSGWidget::updateGL()
     // do the frame and update
     if ( m_pOsgViewer && try_lock() )
     {
+        makeCurrent();
         m_pOsgViewer->frame();
         QGLWidget::updateGL();
         unlock();
