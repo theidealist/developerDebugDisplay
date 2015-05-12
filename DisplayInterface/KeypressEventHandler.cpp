@@ -29,7 +29,7 @@ KeypressEventHandler::~KeypressEventHandler()
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 bool KeypressEventHandler::add(const osgGA::GUIEventAdapter::KeySymbol& key,
-                               const std::function<bool()>& func,
+                               const std::function<bool(const osgGA::GUIEventAdapter&)>& func,
                                const std::string& description)
 {
     // add this key handler to the map
@@ -43,10 +43,6 @@ bool KeypressEventHandler::add(const osgGA::GUIEventAdapter::KeySymbol& key,
 bool KeypressEventHandler::handle(const osgGA::GUIEventAdapter& eventAdapter,
                                   osgGA::GUIActionAdapter&)
 {
-    // is the key pressed
-    if ( osgGA::GUIEventAdapter::KEYDOWN != eventAdapter.getEventType() )
-        return false;
-
     // find this handler
     KeyMap_t::iterator itt( m_keyFuncMap.find(eventAdapter.getKey()) );
     if ( m_keyFuncMap.end() == itt ) return false;
@@ -54,7 +50,7 @@ bool KeypressEventHandler::handle(const osgGA::GUIEventAdapter& eventAdapter,
     // envoke the function(s)
     bool rv(true);
     for ( const auto& entry : itt->second )
-        rv &= entry.func();
+        rv &= entry.func(eventAdapter);
 
     return rv;
 };

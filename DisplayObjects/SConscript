@@ -14,6 +14,7 @@ env.InstallLib(
     env.SharedLibrary(
         target = 'DDDisplayObjects',
         source = [
+            'CameraImages.cpp',
             'Capsules.cpp',
             'Colors.cpp',
             'Cylinders.cpp',
@@ -36,6 +37,7 @@ env.InstallLib(
     )
 
 env.InstallHeaders('DDDisplayObjects', [
+    'CameraImages.h',
     'Capsules.h',
     'Colors.h',
     'Cylinders.h',

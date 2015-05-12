@@ -206,6 +206,7 @@ void QOSGWidget::updateGL()
     // do the frame and update
     if ( m_pOsgViewer && try_lock() )
     {
+        makeCurrent();
         m_pOsgViewer->frame();
         QGLWidget::updateGL();
         unlock();
@@ -266,14 +267,20 @@ void QOSGWidget::mouseDoubleClickEvent( QMouseEvent* qEvent )
 /////////////////////////////////////////////////////////////////
 void QOSGWidget::keyPressEvent( QKeyEvent* theEvent )
 {
-    m_pEventQueue->keyPress( toOsg(theEvent) );
+    if ( not theEvent->isAutoRepeat() )
+    {
+        m_pEventQueue->keyPress( toOsg(theEvent) );
+    }
 };
 
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 void QOSGWidget::keyReleaseEvent( QKeyEvent* theEvent )
 {
-    m_pEventQueue->keyRelease( toOsg(theEvent) );
+    if ( not theEvent->isAutoRepeat() )
+    {
+        m_pEventQueue->keyRelease( toOsg(theEvent) );
+    }
 };
 
 /////////////////////////////////////////////////////////////////

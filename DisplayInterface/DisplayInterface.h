@@ -150,7 +150,7 @@ class DisplayInterface
     /// This is the add function that allows arbitrary functions to be tied to
     /// key events.
     bool add(const osgGA::GUIEventAdapter::KeySymbol& key,
-             const std::function<bool()>& func,
+             const std::function<bool(const osgGA::GUIEventAdapter&)>& func,
              const std::string& description = "NONE");
 
     /// @brief   Method to add a function bound to a keypress
@@ -162,7 +162,7 @@ class DisplayInterface
     /// key events, which just forwards the call to the add function which takes
     /// a proper KeySymbol
     bool add(const char& key,
-             const std::function<bool()>& func,
+             const std::function<bool(const osgGA::GUIEventAdapter&)>& func,
              const std::string& description = "NONE");
 
     bool add(const osgGA::GUIEventAdapter::MouseButtonMask& button,
