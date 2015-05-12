@@ -23,6 +23,7 @@
 #include <DDDisplayObjects/Spheres.h>
 #include <DDDisplayObjects/HeightGrid.h>
 #include <DDDisplayObjects/HeadsUpDisplay.h>
+#include <DDDisplayObjects/CameraImages.h>
 #include <DDDisplayObjects/Images.h>
 
 /// Fancier drawing stuff
@@ -44,8 +45,10 @@ int main(int argc, char* argv[])
         if ( img )
         {
             osg::Matrix pp(osg::Matrix::translate(3,2,1) * osg::Matrix::rotate(1.0, osg::Vec3{1,0.2,0.1}));
-            d3::di().add( "image::frame", d3::get(d3::Image{pp, img, 600.0, 600.0, 5.0}) );
+            d3::di().add( "image::frame", d3::get(d3::CameraImage{pp, img, 600.0, 600.0, 5.0}) );
             d3::di().add( "image::camera", d3::get(d3::Triad{pp}) );
+
+            d3::di().add( "iamge::pic", d3::get(d3::Image{img, {{{0.0,0.0,0.0},{15.0,0.0,0.0},{15.0,10.0,0.0},{0.0,10.0,0.0}}}}) );
         }
     }
 

@@ -1,14 +1,14 @@
 /////////////////////////////////////////////////////////////////
-/// @file      Images.cpp
+/// @file      CameraImages.cpp
 /// @author    Chris L Baker (clb) <chris@chimail.net>
-/// @date      2015.05.06
+/// @date      2015.02.10
 /// @brief     Display an images in 3D
 ///
 /// @attention Copyright (C) 2015
 /// @attention All rights reserved
 /////////////////////////////////////////////////////////////////
 
-#include "Images.h"
+#include "CameraImages.h"
 
 #include <osg/Geometry>
 #include <osg/Texture2D>
@@ -20,18 +20,22 @@ namespace d3
 
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
-osg::ref_ptr<osg::Node> get(const ImageVec_t& images)
+osg::ref_ptr<osg::Node> get(const CameraImageVec_t& images)
 {
     osg::ref_ptr<osg::Group> rv( new osg::Group() );
 
     for ( const auto& image : images )
     {
+        // compute the new image width and height
+        double ww( static_cast<double>(image.image->s()) * image.scale/image.focalLengthX_pix );
+        double hh( static_cast<double>(image.image->t()) * image.scale/image.focalLengthY_pix );
+
         // here we create a quad that will be texture mapped with the image
         osg::ref_ptr<osg::Vec3Array> quad( new osg::Vec3Array() );
-        quad->push_back( image.corners[0] );
-        quad->push_back( image.corners[1] );
-        quad->push_back( image.corners[2] );
-        quad->push_back( image.corners[3] );
+        quad->push_back( osg::Vec3( -ww/2.0, -hh/2.0, image.scale ) );
+        quad->push_back( osg::Vec3(  ww/2.0, -hh/2.0, image.scale ) );
+        quad->push_back( osg::Vec3(  ww/2.0,  hh/2.0, image.scale ) );
+        quad->push_back( osg::Vec3( -ww/2.0,  hh/2.0, image.scale ) );
         osg::ref_ptr<osg::Geometry> geo( new osg::Geometry() );
         geo->setVertexArray( quad );
 
@@ -75,8 +79,13 @@ osg::ref_ptr<osg::Node> get(const ImageVec_t& images)
         // turn off any color binding - we want to use the texture
         geo->setColorBinding(osg::Geometry::BIND_OFF);
 
+        // set our matrix as the provided camera matrix
+        osg::ref_ptr<osg::MatrixTransform> xform(new osg::MatrixTransform());
+        xform->setMatrix(image.cameraPose);
+        xform->addChild(geode);
+
         // add this image and continue
-        rv->addChild(geode);
+        rv->addChild(xform);
     }
 
     return rv;

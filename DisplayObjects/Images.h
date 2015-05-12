@@ -1,15 +1,14 @@
 /////////////////////////////////////////////////////////////////
 /// @file      Images.h
 /// @author    Chris L Baker (clb) <chris@chimail.net>
-/// @date      2015.02.10
+/// @date      2015.05.15
 /// @brief     Display an images in 3D
 ///
 /// @attention Copyright (C) 2015
 /// @attention All rights reserved
 /////////////////////////////////////////////////////////////////
 
-#ifndef  _DDD__DISPLAY_OBJECTS__IMAGE_H_
-#define  _DDD__DISPLAY_OBJECTS__IMAGE_H_
+#pragma once
 
 #include <osg/MatrixTransform>
 #include <osg/Image>
@@ -17,23 +16,15 @@
 namespace d3
 {
 
-/// @brief   Define a simple image display - in 3D, this implies that there will
-///          be a simulated camera viewing this image, so we have a camera pose
-///          as part of it
-///
-/// The image type supported are really just
+/// @brief   Define a simple image display
 struct Image
 {
-    /// Store the camera pose
-    osg::Matrix cameraPose;
-
     /// Store the image to display
     osg::ref_ptr<osg::Image> image;
 
-    /// Store some camera parameters indicating how to display the image
-    double focalLengthX_pix;
-    double focalLengthY_pix;
-    double scale;
+    /// The 4 corners of the image in a clockwise rotation around the image with
+    /// the first corner being the position of the upper left corner
+    std::array<osg::Vec3,4> corners;
 };
 
 /// The standard "lots of these things"
@@ -49,5 +40,3 @@ inline osg::ref_ptr<osg::Node> get(const Image& image)
 };
 
 } // namespace d3
-
-#endif   // _DDD__DISPLAY_OBJECTS__IMAGE_H_
