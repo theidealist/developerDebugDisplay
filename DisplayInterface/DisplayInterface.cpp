@@ -72,7 +72,7 @@ bool DisplayInterface::add(const std::string& name,
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 bool DisplayInterface::add(const osgGA::GUIEventAdapter::KeySymbol& key,
-                           const std::function<bool()>& func,
+                           const std::function<bool(const osgGA::GUIEventAdapter&)>& func,
                            const std::string& description /* = "NONE" */)
 {
     // we have data - the display thread needs to know this before we setup the
@@ -96,7 +96,7 @@ bool DisplayInterface::add(const osgGA::GUIEventAdapter::KeySymbol& key,
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
 bool DisplayInterface::add(const char& key,
-                           const std::function<bool()>& func,
+                           const std::function<bool(const osgGA::GUIEventAdapter&)>& func,
                            const std::string& description /* = "NONE" */)
 {
     return add((osgGA::GUIEventAdapter::KeySymbol)key, func, description);

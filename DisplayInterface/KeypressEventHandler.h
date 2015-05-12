@@ -44,7 +44,7 @@ class KeypressEventHandler : public osgGA::GUIEventHandler
     /// @param   func The function to envoke when that key is pressed
     /// @param   description The description of the key (for the help string)
     bool add(const osgGA::GUIEventAdapter::KeySymbol& key,
-             const std::function<bool()>& func,
+             const std::function<bool(const osgGA::GUIEventAdapter&)>& func,
              const std::string& description);
 
     /// @brief   Override the base's handle function
@@ -58,7 +58,7 @@ class KeypressEventHandler : public osgGA::GUIEventHandler
     struct KeyFunctionMap
     {
         osgGA::GUIEventAdapter::KeySymbol key;
-        std::function<bool()> func;
+        std::function<bool(const osgGA::GUIEventAdapter&)> func;
         std::string desc;
     };
 

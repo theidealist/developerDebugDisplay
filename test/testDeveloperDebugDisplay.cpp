@@ -86,26 +86,38 @@ int main(int argc, char* argv[])
     d3::di().add( "color cloud", d3::get(cpts) );
 
     d3::di().add( 'j',
-                   [&]()->bool
-                   {
-                       std::cout << "Typed j" << std::endl;
-                       return true;
-                   },
-                   "Typing \'j\' is cool" );
+                  [&](const osgGA::GUIEventAdapter& ev)->bool
+                  {
+                      if (osgGA::GUIEventAdapter::KEYDOWN == ev.getEventType())
+                      {
+                          std::cout << "Typed j" << std::endl;
+                          return true;
+                      }
+                      return false;
+                  },
+                  "Typing \'j\' is cool" );
 
     d3::di().add( 'j',
-                   [&]()->bool
+                  [&](const osgGA::GUIEventAdapter& ev)->bool
                    {
-                       std::cout << "Typed j - again" << std::endl;
-                       return true;
+                       if (osgGA::GUIEventAdapter::KEYDOWN == ev.getEventType())
+                       {
+                           std::cout << "Typed j - again" << std::endl;
+                           return true;
+                       }
+                       return false;
                    },
                    "Typing \'j\' twice is really cool" );
 
     d3::di().add( 'k',
-                   [&]()->bool
+                  [&](const osgGA::GUIEventAdapter& ev)->bool
                    {
-                       std::cout << "Typed k" << std::endl;
-                       return true;
+                       if (osgGA::GUIEventAdapter::KEYDOWN == ev.getEventType())
+                       {
+                           std::cout << "Typed k" << std::endl;
+                           return true;
+                       }
+                       return false;
                    },
                    "Typing \'k\' is cool" );
 

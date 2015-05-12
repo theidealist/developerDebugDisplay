@@ -100,7 +100,7 @@ class QOSGWidget : public QGLWidget
     /// @param   func The function to handle the key
     /// @param   description The description for this key
     inline bool addKeyHandler(const osgGA::GUIEventAdapter::KeySymbol& key,
-                              const std::function<bool()>& func,
+                              const std::function<bool(const osgGA::GUIEventAdapter&)>& func,
                               const std::string& description)
     {
         return m_pKeypressEventHandler->add(key, func, description);
