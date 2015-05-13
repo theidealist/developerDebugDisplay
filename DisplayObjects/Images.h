@@ -13,6 +13,8 @@
 #include <osg/MatrixTransform>
 #include <osg/Image>
 
+#include <array>
+
 namespace d3
 {
 

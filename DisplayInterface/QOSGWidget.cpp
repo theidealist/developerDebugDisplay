@@ -27,8 +27,8 @@ namespace d3
 
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
-QOSGWidget::QOSGWidget() :
-    QGLWidget(),
+QOSGWidget::QOSGWidget(QWidget* pp) :
+    QGLWidget(pp),
     m_pGraphicsWindow(new osgViewer::GraphicsWindowEmbedded(0, 0, width(), height())),
     m_pEventQueue(m_pGraphicsWindow->getEventQueue()),
     m_pOsgViewer(new osgViewer::Viewer()),
