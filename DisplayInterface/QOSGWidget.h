@@ -88,6 +88,18 @@ class QOSGWidget : public QGLWidget
     /// @brief   Provide access to the underlying camera
     osg::ref_ptr<osg::Camera> getCamera() const { return m_pOsgViewer->getCamera(); };
 
+    /// @{
+    /// @name    Provide get/set access to the cull mask
+    osg::Node::NodeMask getCullMask() const { return getCamera()->getCullMask(); };
+    void setCullMask(osg::Node::NodeMask msk) { getCamera()->setCullMask(msk); };
+    /// @}
+
+    /// @{
+    /// @name    Provide get/set access to the node mask
+    osg::Node::NodeMask getNodeMask() const { return getCamera()->getNodeMask(); };
+    void setNodeMask(osg::Node::NodeMask msk) { getCamera()->setNodeMask(msk); };
+    /// @}
+
     /// @brief   Allow to set the root group
     inline void setRootGroup(osg::ref_ptr<osg::Group> group)
     {
