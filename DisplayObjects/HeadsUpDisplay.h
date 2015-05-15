@@ -38,12 +38,12 @@ class HeadsUpDisplay
     /// @param   initText The initial text to display
     /// @param   initTextColor The initial color of the text
     /// @param   initShow Should the HUD be displayed initially
-    HeadsUpDisplay(const float& width = 1.0,
-                   const float& height = 0.05,
-                   const Position& position = Position::BOTTOM,
-                   const std::string& initText = "",
-                   const osg::Vec4& initTextColor = osg::Vec4(0.8, 0.8, 0.8, 0.5),
-                   const bool& initShow = true);
+    explicit HeadsUpDisplay(const float& width = 1.0,
+                            const float& height = 0.05,
+                            const Position& position = Position::BOTTOM,
+                            const std::string& initText = "",
+                            const osg::Vec4& initTextColor = osg::Vec4(0.8, 0.8, 0.8, 0.5),
+                            const bool& initShow = true);
 
     /// @brief   Destructor
     ~HeadsUpDisplay();
