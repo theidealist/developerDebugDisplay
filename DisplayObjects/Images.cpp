@@ -58,6 +58,7 @@ osg::ref_ptr<osg::Node> get(const ImageVec_t& images)
 
         // create the texture for the image
         osg::ref_ptr<osg::Texture2D> texture( new osg::Texture2D() );
+        texture->setResizeNonPowerOfTwoHint(false);
         texture->setDataVariance(osg::Object::DYNAMIC);
         texture->setImage( image.image );
 
