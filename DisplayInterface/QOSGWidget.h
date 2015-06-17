@@ -69,7 +69,7 @@ class QOSGWidget : public QGLWidget
     void setClearColor(const osg::Vec4& color = osg::Vec4(0.1, 0.1, 0.1, 1.0));
 
     /// @brief   Get at the clear color
-    osg::Vec4 getClearColor() const { return m_currentClearColor; };
+    const osg::Vec4& getClearColor() const { return m_currentClearColor; };
 
     /// @brief   Track a node
     /// @param   node The node to start tracking

@@ -10,6 +10,7 @@
 #include "DisplayInterface.h"
 #include "MainWindow.h"
 #include "QOSGWidget.h"
+#include "TreeView.h"
 
 #include <iostream>
 #include <chrono>
@@ -64,9 +65,10 @@ bool DisplayInterface::add(const std::string& name,
     // get the lock so we can add stuff
     std::lock_guard<std::mutex> l_lock(m_mutex);
 
-    // add this node to the main window
+    // add this node to the tree view
+    // @note: the setupMainWindow() also sets up the tree view.
     static const bool showNode(true);
-    return m_pMainWindow->add(name, node, showNode, replace);
+    return m_pTreeView->add(name, node, showNode, replace);
 };
 
 /////////////////////////////////////////////////////////////////
@@ -236,6 +238,7 @@ bool DisplayInterface::setRootGroup(osg::ref_ptr<osg::Group> rootGroup)
 /////////////////////////////////////////////////////////////////
 DisplayInterface::DisplayInterface() :
     m_pMainWindow(nullptr),
+    m_pTreeView(nullptr),
     m_pOsgWidget(nullptr),
     m_mutex(),
     m_addNotify(),
@@ -291,6 +294,17 @@ DisplayInterface::DisplayInterface() :
 
                  // pack the osg widget into the main window
                  m_pMainWindow->setOsgWidget(m_pOsgWidget);
+
+                 // setup the m_pTree veiw for all the objets
+                 if ( nullptr == m_pTreeView )
+                 {
+                     m_pTreeView = new TreeView();
+                     m_pTreeView->setOsgWidget(m_pOsgWidget);
+                 }
+
+                 // pack this tree view into the main window
+                 m_pMainWindow->setTreeView(m_pTreeView);
+                 
              }
 
              // set the setup complete flag

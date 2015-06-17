@@ -26,6 +26,7 @@ namespace d3
 
 /// forward declar for the static singleton access below
 class DisplayInterface;
+class TreeView;
 
 /// Provide easy access to the static singleton by way of
 /// @code
@@ -267,6 +268,9 @@ class DisplayInterface
 
     /// The main window that is displayed
     MainWindow*                   m_pMainWindow;
+
+    /// The main tree view for the side-display
+    TreeView*                     m_pTreeView;
 
     /// The osg widget
     QOSGWidget*                   m_pOsgWidget;
