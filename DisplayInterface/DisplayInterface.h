@@ -7,8 +7,7 @@
 /// @attention All rights reserved
 /////////////////////////////////////////////////////////////////
 
-#ifndef _DDD__DISPLAY_INTERFACE__DISPLAY_INTERFACE_H_
-#define _DDD__DISPLAY_INTERFACE__DISPLAY_INTERFACE_H_
+#pragma once
 
 #include <DDDisplayInterface/MainPage.h>
 
@@ -293,4 +292,3 @@ class DisplayInterface
 
 } // namespace d3
 
-#endif // _DDD__DISPLAY_INTERFACE__DISPLAY_INTERFACE_H_

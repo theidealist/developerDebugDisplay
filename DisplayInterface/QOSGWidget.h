@@ -7,8 +7,7 @@
 /// @attention All rights reserved
 /////////////////////////////////////////////////////////////////
 
-#ifndef _DDD__DISPLAY_INTERFACE__Q_OSG_WIDGET_H_
-#define _DDD__DISPLAY_INTERFACE__Q_OSG_WIDGET_H_
+#pragma once
 
 #include "ScreenshotCallback.h"
 #include "KeypressEventHandler.h"
@@ -208,4 +207,3 @@ class QOSGWidget : public QGLWidget
 
 } // namespace d3
 
-#endif // _DDD__DISPLAY_INTERFACE__Q_OSG_WIDGET_H_

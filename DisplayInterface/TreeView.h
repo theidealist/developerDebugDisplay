@@ -1,9 +1,9 @@
 /////////////////////////////////////////////////////////////////
-/// @file      MainWindow.h
+/// @file      TreeView.h
 /// @author    Chris L Baker (clb) <chris@chimail.net>
-/// @date      2014.05.20
+/// @date      2015.06.16
 ///
-/// @attention Copyright (C) 2014
+/// @attention Copyright (C) 2015
 /// @attention
 /// @attention
 /// @attention All rights reserved
@@ -25,9 +25,12 @@ namespace d3
 class QOSGWidget;
 
 /////////////////////////////////////////////////////////////////
-/// @brief   Class to contain the main window in a Q-magic way
+/// @brief   Class to hold the tree view - this makes it useful in other
+///          contexts as a sister class to the QOSGWidget, this can
+///          automatically setup a vew control which allows hierarchical
+///          displays with simple syntax
 /////////////////////////////////////////////////////////////////
-class MainWindow : public QMainWindow
+class TreeView : public QTreeView
 {
     /// standard q-craziness
     Q_OBJECT;
@@ -35,15 +38,24 @@ class MainWindow : public QMainWindow
   public:
 
     /// @brief   Constructor
-    MainWindow();
+    TreeView();
 
     /// @brief   Destructor
-    virtual ~MainWindow();
+    virtual ~TreeView();
 
     /// @brief   Method to set the osg widget
+    /// @param   widget We're controlling the display items in this widget, so
+    ///          the "add()" method adds them to the widget, and we control if
+    ///          they are displayed or not
     void setOsgWidget(QOSGWidget* widget);
 
     /// @brief   Method to add an object to the display
+    /// @param   name The name associated with the node - used to provide some
+    ///          text by the checkbox that will be used to control the display
+    /// @param   showNode A flag to indicate if the node should be shown
+    ///          initially or not
+    /// @param   replace If a node with the same "name" already exists, should
+    ///          we replace it, or just append it as a group
     bool add(const std::string& name,
              const osg::ref_ptr<osg::Node> node,
              const bool& showNode,
@@ -51,37 +63,14 @@ class MainWindow : public QMainWindow
 
   public Q_SLOTS:
 
-    /// @brief   Method to make things go full screen
-    void setFullScreen(bool fullscreen);
-
-    /// @brief   Method to control tracking
-//     void enableNodeTracking(bool enable);
-
-    /// @brief   Method to grab a screen capture
-    void grabSnapshot(bool);
-
-    /// @brief   Method to start capturing frames
-    void continuousCapture(bool checked);
-
-    /// @brief   Activate a frame render
-    void render();
-
     /// @brief   Method to call when the frame is clicked
     void clicked(const QModelIndex& index);
 
-    /// @{
-    /// @name    Public locking functionality
-    inline void lock()     { m_mutex.lock(); };
-    inline bool try_lock() { return m_mutex.try_lock(); };
-    inline void unlock()   { m_mutex.unlock(); };
-    /// @}
-
-    /// @{
-    /// @name    Set various clear colors
-    void setDarkClear();
-    void setLightClear();
-    void setWhiteClear();
-    /// @}
+    /// @brief   Method to reset the column width when something is expanded
+    void expanded(const QModelIndex& index);
+    
+    /// @brief   Method to reset the column width when something is collapsed
+    void collapsed(const QModelIndex& index);
 
   private:
 
@@ -124,10 +113,6 @@ class MainWindow : public QMainWindow
         /// The node
         osg::ref_ptr<osg::Node>     m_node;
     };
-
-    /// @brief   Method to encapsulate a bunch of ugly builder code
-    /// @param   dspMenu The display menu to build
-    void buildDisplayMenu(QMenu* dspMenu);
 
     /// @brief   Internal ethod to add an object to the osg display
     /// @param   name The name to use in the model view
@@ -213,27 +198,14 @@ class MainWindow : public QMainWindow
     static void updateChildren(d3DisplayItem* item,
                                const bool& checked);
 
-    /// @brief   The method for window closing
-    virtual void closeEvent(QCloseEvent *ev);
-
     /// The osg widget
     QOSGWidget*               m_pOsgWidget;
 
     /// The tree model
     QStandardItemModel*       m_pModel;
 
-    /// The tree
-    QTreeView*                m_pTree;
-
-    /// The menu bar
-    QMenuBar*                 m_pMenuBar;
-
-    /// The timer to render the frame
-    QTimer                    m_timer;
-
     /// The model protection
     std::recursive_mutex      m_mutex;
 };
 
 } // namespace d3
-

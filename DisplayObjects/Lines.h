@@ -8,8 +8,7 @@
 /// @attention All rights reserved
 /////////////////////////////////////////////////////////////////
 
-#ifndef  _DDD__DISPLAY_OBJECTS__LINES_H_
-#define  _DDD__DISPLAY_OBJECTS__LINES_H_
+#pragma once
 
 #include <osg/Geode>
 #include <osg/Vec3>
@@ -51,4 +50,3 @@ inline osg::ref_ptr<osg::Node> get(const Line& line)
 
 } // namespace d3
 
-#endif   // _DDD__DISPLAY_OBJECTS__LINES_H_

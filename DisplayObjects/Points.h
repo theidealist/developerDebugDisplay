@@ -8,8 +8,7 @@
 /// @attention All rights reserved
 /////////////////////////////////////////////////////////////////
 
-#ifndef  _DDD__DISPLAY_OBJECTS__POINTS_H_
-#define  _DDD__DISPLAY_OBJECTS__POINTS_H_
+#pragma once
 
 #include <osg/Vec3>
 #include <osg/Vec4>
@@ -48,4 +47,3 @@ inline osg::ref_ptr<osg::Node> get(const Point& point,
 
 } // namespace d3
 
-#endif   // _DDD__DISPLAY_OBJECTS__POINTS_H_

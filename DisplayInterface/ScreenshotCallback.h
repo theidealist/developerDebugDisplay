@@ -7,8 +7,7 @@
 /// @attention All rights reserved
 /////////////////////////////////////////////////////////////////
 
-#ifndef  _DDD__DISPLAY_INTERFACE__SCREENSHOT_CALLBACK_H_
-#define  _DDD__DISPLAY_INTERFACE__SCREENSHOT_CALLBACK_H_
+#pragma once
 
 #include <osgViewer/Viewer>
 
@@ -63,4 +62,3 @@ class ScreenshotCallback : public osg::Camera::DrawCallback
 
 } // namespace d3
 
-#endif   // _DDD__DISPLAY_INTERFACE__SCREENSHOT_CALLBACK_H_

@@ -8,8 +8,7 @@
 /// @attention All rights reserved
 /////////////////////////////////////////////////////////////////
 
-#ifndef  _DDD__DISPLAY_OBJECTS__COLORS_H_
-#define  _DDD__DISPLAY_OBJECTS__COLORS_H_
+#pragma once
 
 #include <osg/Vec4>
 #include <vector>
@@ -78,4 +77,3 @@ unsigned int toIndex(const double rr,
 
 } // namespace d3
 
-#endif   // _DDD__DISPLAY_OBJECTS__COLORS_H_

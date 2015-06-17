@@ -8,8 +8,7 @@
 /// @attention All rights reserved
 /////////////////////////////////////////////////////////////////
 
-#ifndef  _DDD__DISPLAY_OBJECTS__HEIGHT_FIELD_H_
-#define  _DDD__DISPLAY_OBJECTS__HEIGHT_FIELD_H_
+#pragma once
 
 #include "Points.h"
 
@@ -58,4 +57,3 @@ osg::ref_ptr<osg::Node> get(const HeightGrid& heightGrid);
 
 } // namespace d3
 
-#endif   // _DDD__DISPLAY_OBJECTS__HEIGHT_FIELD_H_
