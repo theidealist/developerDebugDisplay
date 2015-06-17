@@ -7,8 +7,7 @@
 /// @attention All rights reserved
 /////////////////////////////////////////////////////////////////
 
-#ifndef _DDD__DISPLAY_INTERFACE__DISPLAY_INTERFACE_H_
-#define _DDD__DISPLAY_INTERFACE__DISPLAY_INTERFACE_H_
+#pragma once
 
 #include <DDDisplayInterface/MainPage.h>
 
@@ -27,6 +26,7 @@ namespace d3
 
 /// forward declar for the static singleton access below
 class DisplayInterface;
+class TreeView;
 
 /// Provide easy access to the static singleton by way of
 /// @code
@@ -269,6 +269,9 @@ class DisplayInterface
     /// The main window that is displayed
     MainWindow*                   m_pMainWindow;
 
+    /// The main tree view for the side-display
+    TreeView*                     m_pTreeView;
+
     /// The osg widget
     QOSGWidget*                   m_pOsgWidget;
 
@@ -293,4 +296,3 @@ class DisplayInterface
 
 } // namespace d3
 
-#endif // _DDD__DISPLAY_INTERFACE__DISPLAY_INTERFACE_H_

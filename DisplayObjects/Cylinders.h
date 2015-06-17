@@ -8,8 +8,7 @@
 /// @attention All rights reserved
 /////////////////////////////////////////////////////////////////
 
-#ifndef  _DDD__DISPLAY_OBJECTS__CYLINDERS_H_
-#define  _DDD__DISPLAY_OBJECTS__CYLINDERS_H_
+#pragma once
 
 #include <osg/Vec3>
 #include <osg/Vec4>
@@ -54,4 +53,3 @@ inline osg::ref_ptr<osg::Node> get(const Cylinder& cylinder)
 
 } // namespace d3
 
-#endif   // _DDD__DISPLAY_OBJECTS__CYLINDERS_H_

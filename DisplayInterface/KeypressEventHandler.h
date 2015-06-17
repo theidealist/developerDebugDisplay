@@ -8,8 +8,7 @@
 /// @attention All rights reserved
 /////////////////////////////////////////////////////////////////
 
-#ifndef  _DDD__DISPLAY_INTERFACE__KEYPRESS_EVENT_HANDLER_H_
-#define  _DDD__DISPLAY_INTERFACE__KEYPRESS_EVENT_HANDLER_H_
+#pragma once
 
 #include <osgGA/GUIEventHandler>
 
@@ -70,4 +69,3 @@ class KeypressEventHandler : public osgGA::GUIEventHandler
 
 } // namespace d3
 
-#endif   // _DDD__DISPLAY_INTERFACE__KEYPRESS_EVENT_HANDLER_H_

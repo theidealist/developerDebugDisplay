@@ -8,8 +8,7 @@
 /// @attention All rights reserved
 /////////////////////////////////////////////////////////////////
 
-#ifndef  _DDD__DISPLAY_OBJECTS__HEADS_UP_DISPLAY_H_
-#define  _DDD__DISPLAY_OBJECTS__HEADS_UP_DISPLAY_H_
+#pragma once
 
 #include <osgText/Text>
 
@@ -97,4 +96,3 @@ inline osg::ref_ptr<osg::Node> get(const HeadsUpDisplay& hud)
 
 } // namespace d3
 
-#endif   // _DDD__DISPLAY_OBJECTS__HEADS_UP_DISPLAY_H_

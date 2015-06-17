@@ -7,8 +7,7 @@
 /// @attention All rights reserved
 /////////////////////////////////////////////////////////////////
 
-#ifndef _DDD__DISPLAY_INTERFACE__Q_OSG_WIDGET_H_
-#define _DDD__DISPLAY_INTERFACE__Q_OSG_WIDGET_H_
+#pragma once
 
 #include "ScreenshotCallback.h"
 #include "KeypressEventHandler.h"
@@ -70,7 +69,7 @@ class QOSGWidget : public QGLWidget
     void setClearColor(const osg::Vec4& color = osg::Vec4(0.1, 0.1, 0.1, 1.0));
 
     /// @brief   Get at the clear color
-    osg::Vec4 getClearColor() const { return m_currentClearColor; };
+    const osg::Vec4& getClearColor() const { return m_currentClearColor; };
 
     /// @brief   Track a node
     /// @param   node The node to start tracking
@@ -208,4 +207,3 @@ class QOSGWidget : public QGLWidget
 
 } // namespace d3
 
-#endif // _DDD__DISPLAY_INTERFACE__Q_OSG_WIDGET_H_

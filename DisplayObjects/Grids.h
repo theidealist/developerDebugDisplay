@@ -8,8 +8,7 @@
 /// @attention All rights reserved
 /////////////////////////////////////////////////////////////////
 
-#ifndef  _DDD__DISPLAY_OBJECTS__GRIDS_H_
-#define  _DDD__DISPLAY_OBJECTS__GRIDS_H_
+#pragma once
 
 #include <osg/Vec2>
 #include <osg/Vec4>
@@ -61,4 +60,3 @@ inline osg::ref_ptr<osg::Node> ground(const double& spacing = 0.5,
 
 } // namespace d3
 
-#endif   // _DDD__DISPLAY_OBJECTS__GRIDS_H_

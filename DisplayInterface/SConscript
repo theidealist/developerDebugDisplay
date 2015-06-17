@@ -21,6 +21,7 @@ env.InstallLib(
             'MainWindow.cpp',
             'QOSGWidget.cpp',
             'ScreenshotCallback.cpp',
+            'TreeView.cpp',
             ],
         LIBS = [
             'DDDisplayObjects',
@@ -44,4 +45,5 @@ env.InstallHeaders('DDDisplayInterface', [
     'MainWindow.h',
     'QOSGWidget.h',
     'ScreenshotCallback.h',
+    'TreeView.h',
     ])

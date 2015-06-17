@@ -8,8 +8,7 @@
 /// @attention All rights reserved
 /////////////////////////////////////////////////////////////////
 
-#ifndef  _DDD__DISPLAY_OBJECTS__CAMERA_IMAGE_H_
-#define  _DDD__DISPLAY_OBJECTS__CAMERA_IMAGE_H_
+#pragma once
 
 #include <osg/MatrixTransform>
 #include <osg/Image>
@@ -50,4 +49,3 @@ inline osg::ref_ptr<osg::Node> get(const CameraImage& image)
 
 } // namespace d3
 
-#endif   // _DDD__DISPLAY_OBJECTS__CAMERA_IMAGE_H_

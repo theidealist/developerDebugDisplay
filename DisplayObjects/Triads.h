@@ -8,8 +8,7 @@
 /// @attention All rights reserved
 /////////////////////////////////////////////////////////////////
 
-#ifndef  _DDD__DISPLAY_OBJECTS__TRIADS_H_
-#define  _DDD__DISPLAY_OBJECTS__TRIADS_H_
+#pragma once
 
 #include <osg/Node>
 #include <vector>
@@ -53,4 +52,3 @@ inline osg::ref_ptr<osg::Node> origin()
 
 } // namespace d3
 
-#endif   // _DDD__DISPLAY_OBJECTS__GRID_H_
