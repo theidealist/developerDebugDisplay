@@ -88,6 +88,27 @@ class QOSGWidget : public QGLWidget
     /// @brief   Provide access to the underlying camera
     osg::ref_ptr<osg::Camera> getCamera() const { return m_pOsgViewer->getCamera(); };
 
+    /// @brief   Get a normalized ray in world coordinates for a point clicked
+    ///          in the scene.
+    /// @param   startPoint the returned starting point of the vecotr (i.e. the
+    ///          camera eye position
+    /// @param   rayDirection The direction ray in world coordinates normalized
+    /// @param   normalizedClick The point clicked in the scene, normalized as
+    ///          in event.getXnormalized(), event.getYnormalized()
+    ///
+    /// I honestly do not understand why this is so difficult for osg to
+    /// provide. I'm sure this is not the easiest way to do this, but I'm pretty
+    /// confident this is right. What I'd really like to have is a way to get at
+    /// a matrix which takes points in the scene or camera frame and returns the
+    /// point in the world frame. Then I can do (0,0,0) times this matrix to get
+    /// the camera's position, and (xx,yy,1.0) to get the world point position
+    /// of the clicked point, and normalize it to essentially get a ray in the
+    /// world's location, but that's not immediately obvious to me how to do
+    /// that... though I think I've solved that before...
+    void getNormalizedWorldRay(osg::Vec3& startPoint,
+                               osg::Vec3& rayDirection,
+                               const osg::Vec2& normalizedClick);
+
     /// @{
     /// @name    Provide get/set access to the cull mask
     osg::Node::NodeMask getCullMask() const { return getCamera()->getCullMask(); };
