@@ -101,6 +101,7 @@ class DisplayInterface
     /// @param   replace Should we replace the node if "name" already exists
     ///          (i.e. if false, it will just be appended to the current node
     ///          group)
+    /// @return  boolean True implies success
     ///
     /// This is the main method used to add an osg node to the display by
     /// name. The name of the item will be added to the tree view on the right
@@ -146,6 +147,7 @@ class DisplayInterface
     /// @param   key The key to bind to this function
     /// @param   func The function to call when the key is pressed
     /// @param   description The description of the function
+    /// @return  boolean True implies success
     ///
     /// This is the add function that allows arbitrary functions to be tied to
     /// key events.
@@ -157,6 +159,7 @@ class DisplayInterface
     /// @param   key The key to bind to this function (char version)
     /// @param   func The function to call when the key is pressed
     /// @param   description The description of the function
+    /// @return  boolean True implies success
     ///
     /// This is the add function that allows arbitrary functions to be tied to
     /// key events, which just forwards the call to the add function which takes
@@ -165,8 +168,22 @@ class DisplayInterface
              const std::function<bool(const osgGA::GUIEventAdapter&)>& func,
              const std::string& description = "NONE");
 
+    /// @brief   Method to add a function bound to a mouse button press
+    /// @param   button The mouse button to bind to this function
+    /// @param   func The function to call when the key is pressed
+    /// @param   description The description of the function
+    /// @return  boolean True implies success
     bool add(const osgGA::GUIEventAdapter::MouseButtonMask& button,
              const std::function<bool(const osgGA::GUIEventAdapter&)>& func,
+             const std::string& description = "NONE");
+
+    /// @brief   Add a method to handle mouse movement events
+    /// @param   func The function to call for mouse movements
+    /// @param   description The description of the function (i.e. for help)
+    /// @return  boolean True implies success
+    /// @note    The function will only be called when no mouse buttons are
+    ///          pressed, and only when the event type is "MOVE"
+    bool add(const std::function<bool(const osgGA::GUIEventAdapter&)>& func,
              const std::string& description = "NONE");
 
     /// @brief   Track a node with the camera
@@ -174,6 +191,7 @@ class DisplayInterface
     /// @param   eye The position of the eye in the node's frame
     /// @param   center The center point of the trackball
     /// @param   up The up vector of the camera
+    /// @return  boolean True implies success
     ///
     /// This method will track a node with the camera. The current manipulator
     /// mode is the trackball which can still be adjusted, but the camera will

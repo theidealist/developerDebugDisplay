@@ -43,16 +43,25 @@ bool ClickEventHandler::add(const osgGA::GUIEventAdapter::MouseButtonMask& butto
 bool ClickEventHandler::handle(const osgGA::GUIEventAdapter& eventAdapter,
                                osgGA::GUIActionAdapter&)
 {
-    // find this handler
-    ClickMap_t::iterator itt( m_clickFuncMap.find((osgGA::GUIEventAdapter::MouseButtonMask)eventAdapter.getButton()) );
-    if ( m_clickFuncMap.end() == itt ) return false;
+    if ( 0x7 & eventAdapter.getButton() )
+    {
+        // find this handler
+        ClickMap_t::iterator itt( m_clickFuncMap.find((osgGA::GUIEventAdapter::MouseButtonMask)eventAdapter.getButton()) );
+        if ( m_clickFuncMap.end() == itt ) return false;
 
-    // envoke the function(s)
-    bool rv(true);
-    for ( const auto& entry : itt->second )
-        rv &= entry.func(eventAdapter);
+        // envoke the function(s)
+        bool rv(false);
+        if ( not itt->second.empty() )
+        {
+            rv = true;
+            for ( const auto& entry : itt->second )
+                rv &= entry.func(eventAdapter);
+        }
 
-    return rv;
+        return rv;
+    }
+
+    return false;
 };
 
 } // namespace d3

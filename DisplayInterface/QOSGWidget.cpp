@@ -36,6 +36,7 @@ QOSGWidget::QOSGWidget(QWidget* pp) :
     m_availableManipulators(),
     m_currentManipulator(),
 
+    m_pMotionEventHandler(new MotionEventHandler()),
     m_pKeypressEventHandler(new KeypressEventHandler()),
     m_pClickEventHandler(new ClickEventHandler()),
 
@@ -140,6 +141,7 @@ void QOSGWidget::initialize()
     // add the key press event handler
     m_pOsgViewer->getEventHandlers().push_front(m_pKeypressEventHandler);
     m_pOsgViewer->getEventHandlers().push_front(m_pClickEventHandler);
+    m_pOsgViewer->getEventHandlers().push_front(m_pMotionEventHandler);
 
     // done with init, so unlock things
     unlock();
@@ -197,6 +199,35 @@ void QOSGWidget::trackNode(const osg::ref_ptr<osg::Node>& node,
         nodeTracker->setTrackNode(node);
         setManipulator(SupportedManipulator::NODE_TRACKER);
     }
+};
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+void QOSGWidget::getNormalizedWorldRay(osg::Vec3& startPoint,
+                                       osg::Vec3& rayDirection,
+                                       const osg::Vec2& normalizedClick)
+{
+    // the eye is where the camera is located in the world
+    osg::Vec3 center, up;
+    getCamera()->getViewMatrixAsLookAt(startPoint, center, up);
+
+    // construct the matrix that takes a scene-clicked point and converts it
+    // to world coordinates
+    osg::Matrixd viewMatrix = getCamera()->getViewMatrix();
+    osg::Matrix projectionMatrix = getCamera()->getProjectionMatrix();
+    osg::Matrix inverseCameraMatrix;
+    inverseCameraMatrix.invert(viewMatrix * projectionMatrix);
+
+    // the clicked point is a homogeneous point at z=1
+    osg::Vec3 clickedPoint(normalizedClick.x(), normalizedClick.y(), 1.0);
+
+    // get the clicked point in world coordinates
+    osg::Vec3 worldPoint( clickedPoint * inverseCameraMatrix );
+
+    // the direction in world to the clicked point is this world point - the
+    // starting point (i.e. the camera eye location)
+    rayDirection = worldPoint - startPoint;
+    rayDirection.normalize();
 };
 
 /////////////////////////////////////////////////////////////////
