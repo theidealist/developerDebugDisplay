@@ -10,6 +10,7 @@
 #pragma once
 
 #include "ScreenshotCallback.h"
+#include "MotionEventHandler.h"
 #include "KeypressEventHandler.h"
 #include "ClickEventHandler.h"
 
@@ -106,6 +107,15 @@ class QOSGWidget : public QGLWidget
         m_pOsgViewer->setSceneData( m_pRoot );
     };
 
+    /// @brief   Add a motion event handler
+    /// @param   func The func to call for motion
+    /// @param   description The description for help
+    inline bool addMotionEventHandler(const std::function<bool(const osgGA::GUIEventAdapter&)>& func,
+                                      const std::string& description)
+    {
+        return m_pMotionEventHandler->add(func, description);
+    };
+    
     /// @brief   Add a handler for a specific key
     /// @param   key The key to handle
     /// @param   func The function to handle the key
@@ -186,6 +196,9 @@ class QOSGWidget : public QGLWidget
     /// The current manipulator
     osg::ref_ptr<osgGA::CameraManipulator>                              m_currentManipulator;
 
+    /// So we can handle motion events
+    osg::ref_ptr<MotionEventHandler>                                    m_pMotionEventHandler;
+    
     /// So we can handle keypress events
     osg::ref_ptr<KeypressEventHandler>                                  m_pKeypressEventHandler;
 

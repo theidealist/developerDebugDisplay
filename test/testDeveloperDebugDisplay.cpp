@@ -144,6 +144,13 @@ int main(int argc, char* argv[])
                   },
                   "Right Click Test" );
 
+    d3::di().add( [&](const osgGA::GUIEventAdapter& event)->bool
+                  {
+                      std::cout << "motion" << std::endl;
+                      return false;
+                  },
+                  "Motion Event Handler" );
+
     bool replace(true);
     d3::di().add( "par::not::appender", d3::get(d3::Point{osg::Vec3d(1,0,0), d3::white()}), replace);
     d3::di().add( "par::not::appender", d3::get(d3::Point{osg::Vec3d(2,0,0), d3::white()}), replace);

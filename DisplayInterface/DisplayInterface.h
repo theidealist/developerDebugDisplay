@@ -177,6 +177,15 @@ class DisplayInterface
              const std::function<bool(const osgGA::GUIEventAdapter&)>& func,
              const std::string& description = "NONE");
 
+    /// @brief   Add a method to handle mouse movement events
+    /// @param   func The function to call for mouse movements
+    /// @param   description The description of the function (i.e. for help)
+    /// @return  boolean True implies success
+    /// @note    The function will only be called when no mouse buttons are
+    ///          pressed, and only when the event type is "MOVE"
+    bool add(const std::function<bool(const osgGA::GUIEventAdapter&)>& func,
+             const std::string& description = "NONE");
+
     /// @brief   Track a node with the camera
     /// @param   node The node to track
     /// @param   eye The position of the eye in the node's frame

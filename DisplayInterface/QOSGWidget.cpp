@@ -36,6 +36,7 @@ QOSGWidget::QOSGWidget(QWidget* pp) :
     m_availableManipulators(),
     m_currentManipulator(),
 
+    m_pMotionEventHandler(new MotionEventHandler()),
     m_pKeypressEventHandler(new KeypressEventHandler()),
     m_pClickEventHandler(new ClickEventHandler()),
 
@@ -140,6 +141,7 @@ void QOSGWidget::initialize()
     // add the key press event handler
     m_pOsgViewer->getEventHandlers().push_front(m_pKeypressEventHandler);
     m_pOsgViewer->getEventHandlers().push_front(m_pClickEventHandler);
+    m_pOsgViewer->getEventHandlers().push_front(m_pMotionEventHandler);
 
     // done with init, so unlock things
     unlock();
