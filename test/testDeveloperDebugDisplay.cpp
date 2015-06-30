@@ -20,6 +20,7 @@
 #include <DDDisplayObjects/MeshGrid.h>
 #include <DDDisplayObjects/Cylinders.h>
 #include <DDDisplayObjects/Capsules.h>
+#include <DDDisplayObjects/Cones.h>
 #include <DDDisplayObjects/Spheres.h>
 #include <DDDisplayObjects/HeightGrid.h>
 #include <DDDisplayObjects/HeadsUpDisplay.h>
@@ -47,13 +48,14 @@ int main(int argc, char* argv[])
             osg::Matrix pp(osg::Matrix::translate(3,2,1) * osg::Matrix::rotate(1.0, osg::Vec3{1,0.2,0.1}));
             d3::di().add( "image::frame", d3::get(d3::CameraImage{pp, img, 600.0, 600.0, 5.0}) );
             d3::di().add( "image::camera", d3::get(d3::Triad{pp}) );
-
             d3::di().add( "iamge::pic", d3::get(d3::Image{img, {{{0.0,0.0,0.0},{15.0,0.0,0.0},{15.0,10.0,0.0},{0.0,10.0,0.0}}}}) );
         }
     }
 
     d3::di().add( "ground", d3::ground() );
     d3::di().add( "origin", d3::origin() );
+
+    d3::di().add( "cone", d3::get(d3::Cone({{3.0, 3.0, 3.0}, 0.2, 1.0, {1.0, 0.0, 0.5, 0.2}})) );
 
     // You can add to the draw object like this...
     d3::di().add( "first::line",
