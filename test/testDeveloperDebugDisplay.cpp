@@ -26,6 +26,7 @@
 #include <DDDisplayObjects/HeadsUpDisplay.h>
 #include <DDDisplayObjects/CameraImages.h>
 #include <DDDisplayObjects/Images.h>
+#include <DDDisplayObjects/Voxels.h>
 
 /// Fancier drawing stuff
 #include <osg/MatrixTransform>
@@ -39,6 +40,17 @@
 
 int main(int argc, char* argv[])
 {
+    // bulid a cell array
+    d3::VoxelVec_t cells;
+    osg::Vec3d halfCell{0.1, 0.1, 0.5};
+    for ( double xx(10.0) ; xx<=20.0 ; xx+=0.1 )
+        for ( double yy(10.0) ; yy<=15.0 ; yy+=0.1 )
+            for ( double zz(0.0) ; zz<=5.0 ; zz+=0.5 )
+                cells.emplace_back(d3::Voxel{osg::Vec3d{xx,yy,zz}-halfCell,
+                                             osg::Vec3d{xx,yy,zz}+halfCell,
+                                             {1.0, 1.0, 0.0, 1.0}});
+    d3::di().add( "Cell Array", d3::get(cells) );
+    
     // the scope here is to make sure that the image given to the display is
     // held by the display even when this one goes out of scope
     {
