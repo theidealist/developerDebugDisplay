@@ -30,14 +30,14 @@ osg::ref_ptr<osg::Node> get(const VoxelVec_t& voxels)
     for ( const auto& vv : voxels )
     {
         // make the 8 corners of the cell
-        osg::Vec3d corner0{vv.minCorner.x(), vv.minCorner.y(), vv.minCorner.z()};
-        osg::Vec3d corner1{vv.maxCorner.x(), vv.minCorner.y(), vv.minCorner.z()};
-        osg::Vec3d corner2{vv.maxCorner.x(), vv.maxCorner.y(), vv.minCorner.z()};
-        osg::Vec3d corner3{vv.minCorner.x(), vv.maxCorner.y(), vv.minCorner.z()};
-        osg::Vec3d corner4{vv.minCorner.x(), vv.minCorner.y(), vv.maxCorner.z()};
-        osg::Vec3d corner5{vv.maxCorner.x(), vv.minCorner.y(), vv.maxCorner.z()};
-        osg::Vec3d corner6{vv.maxCorner.x(), vv.maxCorner.y(), vv.maxCorner.z()};
-        osg::Vec3d corner7{vv.minCorner.x(), vv.maxCorner.y(), vv.maxCorner.z()};
+        osg::Vec3d corner0(vv.minCorner.x(), vv.minCorner.y(), vv.minCorner.z());
+        osg::Vec3d corner1(vv.maxCorner.x(), vv.minCorner.y(), vv.minCorner.z());
+        osg::Vec3d corner2(vv.maxCorner.x(), vv.maxCorner.y(), vv.minCorner.z());
+        osg::Vec3d corner3(vv.minCorner.x(), vv.maxCorner.y(), vv.minCorner.z());
+        osg::Vec3d corner4(vv.minCorner.x(), vv.minCorner.y(), vv.maxCorner.z());
+        osg::Vec3d corner5(vv.maxCorner.x(), vv.minCorner.y(), vv.maxCorner.z());
+        osg::Vec3d corner6(vv.maxCorner.x(), vv.maxCorner.y(), vv.maxCorner.z());
+        osg::Vec3d corner7(vv.minCorner.x(), vv.maxCorner.y(), vv.maxCorner.z());
 
         // top of this cell
         cellEdges.emplace_back(Line{corner4, corner5, vv.color});
@@ -62,11 +62,11 @@ osg::ref_ptr<osg::Node> get(const VoxelVec_t& voxels)
     std::sort(cellEdges.begin(), cellEdges.end(),
               [](const Line& edge0, const Line& edge1)
               {
-                  osg::Vec3d mid0{ (edge0.begin + edge0.end)/2.0 };
-                  double dist0{ mid0.x()*mid0.x() + mid0.y()*mid0.y() + mid0.z()*mid0.z() };
+                  osg::Vec3d mid0( (edge0.begin + edge0.end)/2.0 );
+                  double dist0( mid0.x()*mid0.x() + mid0.y()*mid0.y() + mid0.z()*mid0.z() );
 
-                  osg::Vec3d mid1{ (edge1.begin + edge1.end)/2.0 };
-                  double dist1{ mid1.x()*mid1.x() + mid1.y()*mid1.y() + mid1.z()*mid1.z() };
+                  osg::Vec3d mid1( (edge1.begin + edge1.end)/2.0 );
+                  double dist1( mid1.x()*mid1.x() + mid1.y()*mid1.y() + mid1.z()*mid1.z() );
                   return (dist0 < dist1);
               });
 
