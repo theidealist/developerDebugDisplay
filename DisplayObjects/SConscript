@@ -28,6 +28,7 @@ env.InstallLib(
             'Points.cpp',
             'Spheres.cpp',
             'Triads.cpp',
+            'Voxels.cpp',
             ],
         LIBS = [
             'osg',
@@ -52,4 +53,5 @@ env.InstallHeaders('DDDisplayObjects', [
     'Points.h',
     'Spheres.h',
     'Triads.h',
+    'Voxels.h',
     ])

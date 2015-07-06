@@ -8,7 +8,6 @@
 /// @attention All rights reserved
 /////////////////////////////////////////////////////////////////
 
-#include "Colors.h"
 #include "Lines.h"
 
 #include <osg/Geometry>

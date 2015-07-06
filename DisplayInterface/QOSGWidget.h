@@ -51,7 +51,7 @@ class QOSGWidget : public QGLWidget
     };
 
     /// @brief   Constructor
-    QOSGWidget(QWidget* pp = nullptr);
+    explicit QOSGWidget(QWidget* pp = nullptr);
 
     /// @brief   Destructor
     virtual ~QOSGWidget();
