@@ -35,7 +35,7 @@ struct Voxel
 };
 
 /// alias a vector of voxels
-using VoxelVec_t = std::vector<Voxel>;
+typedef std::vector<Voxel> VoxelVec_t;
 
 /// @brief   get an osg node from a vector of voxels
 /// @param   voxels The voxels we should draw
